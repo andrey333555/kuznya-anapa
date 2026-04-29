@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кузня Анапа — Шевченко 24</title>
+  <style>
+    :root {
+      --bg: #070707;
+      --panel: #111111;
+      --text: #f5f5f5;
+      --muted: #b2b2b2;
+      --red: #d60000;
+      --red-bright: #ff1c1c;
+      --line: #2b2b2b;
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", "Montserrat", "Segoe UI", "Arial", sans-serif;
+      background: radial-gradient(circle at top right, #1d0000 0%, var(--bg) 40%);
+      color: var(--text);
+      line-height: 1.5;
+      letter-spacing: 0.3px;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10, 10, 10, 0.88);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      color: var(--text);
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      color: var(--red-bright);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--red-bright);
+    }
+
+    section {
+      padding: 82px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hero {
+      min-height: 60vh;
+      display: grid;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(214, 0, 0, 0.2);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.45)),
+        repeating-linear-gradient(
+          -45deg,
+          rgba(255, 255, 255, 0.03) 0 3px,
+          rgba(255, 255, 255, 0) 3px 10px
+        );
+      z-index: -1;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      max-width: 760px;
+      text-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero h1 .accent {
+      color: var(--red-bright);
+    }
+
+    .hero p {
+      margin-top: 20px;
+      color: #dedede;
+      font-size: clamp(0.95rem, 2vw, 1.2rem);
+      max-width: 600px;
+    }
+
+    .hero-frame {
+      min-height: 300px;
+      border: 1px solid #3a3a3a;
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.2)),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.02) 0 1px,
+          transparent 1px 24px
+        );
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-frame::before {
+      content: "ANAPA HALL";
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      color: #8e8e8e;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .hero-frame::after {
+      content: "";
+      position: absolute;
+      inset: -30% -20%;
+      background:
+        radial-gradient(circle at 20% 40%, rgba(255, 255, 255, 0.06), transparent 36%),
+        radial-gradient(circle at 80% 70%, rgba(255, 28, 28, 0.08), transparent 40%);
+      mix-blend-mode: screen;
+      opacity: 0.45;
+      animation: loftPulse 9s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-map {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: grayscale(1) contrast(1.05) brightness(0.78);
+      z-index: 0;
+    }
+
+    @keyframes loftPulse {
+      0% { transform: translate3d(-1.5%, -1%, 0) scale(1); opacity: 0.32; }
+      50% { transform: translate3d(1.5%, 1%, 0) scale(1.04); opacity: 0.48; }
+      100% { transform: translate3d(0, -1%, 0) scale(1.02); opacity: 0.4; }
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--red), #8d0000);
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      border: 1px solid #ff3e3e;
+      box-shadow: 0 10px 25px rgba(214, 0, 0, 0.38);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 16px 32px rgba(214, 0, 0, 0.52);
+    }
+
+    .btn-back {
+      background: #121212;
+      border-color: #3a3a3a;
+      box-shadow: none;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      position: relative;
+      display: inline-block;
+      padding-left: 14px;
+    }
+
+    h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--red-bright);
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: linear-gradient(170deg, #171717, #0e0e0e);
+      border: 1px solid var(--line);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      min-height: 140px;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--red-bright);
+    }
+
+    .card h3 {
+      text-transform: uppercase;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+      font-size: 0.92rem;
+      list-style: none;
+      margin-bottom: 6px;
+    }
+
+    .schedule {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+      background: var(--panel);
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #242424;
+      font-size: 0.92rem;
+    }
+
+    th {
+      color: #fff;
+      background: #190000;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    td {
+      color: #d4d4d4;
+    }
+
+    .map-placeholder,
+    .gallery-placeholder {
+      border: 1px dashed #4a4a4a;
+      background: rgba(255, 255, 255, 0.01);
+      min-height: 230px;
+      display: grid;
+      place-items: center;
+      color: #969696;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.85rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .gallery-item {
+      border: 1px dashed #4a4a4a;
+      background: rgba(255, 255, 255, 0.01);
+      min-height: 200px;
+      display: grid;
+      place-items: center;
+      color: #888;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      padding: 24px 0 38px;
+      text-align: center;
+      color: #888;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 980px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        gap: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+
+      .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .hero-frame {
+        min-height: 220px;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.8rem, 8vw, 2.6rem);
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+        padding: 14px 16px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">Кузня <span>Анапа</span></div>
+      <nav class="nav-links">
+        <a href="../index.html">Главная</a>
+        <a href="#schedule">Расписание</a>
+        <a href="#media">Зал</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container reveal">
+        <a class="btn btn-back" href="../index.html">Назад на главную</a>
+        <div class="hero-layout">
+          <div>
+            <h1>КУЗНЯ АНАПА — <span class="accent">УЛ. ШЕВЧЕНКО 24</span></h1>
+            <p>Зал филиала Анапа. Жесткая база: техника, функционал, режим.</p>
+            <a class="btn" href="https://wa.me/79615210005?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%BE%D0%B1%D0%BD%D1%83%D1%8E%20%D1%82%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D1%83%20%D0%B2%20%D0%90%D0%BD%D0%B0%D0%BF%D0%B5%20%D0%BD%D0%B0%20%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE%2024." target="_blank" rel="noopener noreferrer">ЗАПИСАТЬСЯ НА ПРОБНУЮ ТРЕНИРОВКУ</a>
+          </div>
+          <div class="hero-frame">
+            <iframe
+              class="hero-map"
+              title="Карта — Кузня Анапа, ул. Шевченко 24"
+              src="https://yandex.ru/map-widget/v1/?text=%D0%90%D0%BD%D0%B0%D0%BF%D0%B0%2C%20%D1%83%D0%BB.%20%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE%2024&z=16"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule">
+      <div class="container">
+        <h2 class="reveal">Расписание — зал Шевченко 24</h2>
+        <div class="schedule reveal">
+          <table>
+            <thead>
+              <tr>
+                <th>День</th>
+                <th>17:00</th>
+                <th>18:00</th>
+                <th>19:00</th>
+                <th>20:00</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Понедельник</td>
+                <td>Дети 7-12</td>
+                <td>ММА Новички</td>
+                <td>ММА Pro</td>
+                <td>Функционал</td>
+              </tr>
+              <tr>
+                <td>Среда</td>
+                <td>Дети 7-12</td>
+                <td>Ударная техника</td>
+                <td>ММА Pro</td>
+                <td>Спарринги</td>
+              </tr>
+              <tr>
+                <td>Пятница</td>
+                <td>Дети 7-12</td>
+                <td>ММА Новички</td>
+                <td>Грэпплинг</td>
+                <td>Функционал</td>
+              </tr>
+              <tr>
+                <td>Суббота</td>
+                <td>ОФП</td>
+                <td>Open Mat</td>
+                <td>Индивидуально</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="media">
+      <div class="container">
+        <h2 class="reveal">ГАЛЕРЕЯ ЗАЛА</h2>
+        <div class="gallery-grid reveal">
+          <div class="gallery-item">Фото 1</div>
+          <div class="gallery-item">Фото 2</div>
+          <div class="gallery-item">Фото 3</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">Кузня Анапа — филиал Шевченко 24</div>
+  </footer>
+
+  <script>
+    (function () {
+      var revealed = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        revealed.forEach(function (el) { el.classList.add("is-visible"); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      revealed.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+</body>
+</html>

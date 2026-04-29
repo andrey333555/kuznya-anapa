@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Кузня Шоп — Экипировка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #07090c;
+            --panel: #10141a;
+            --panel-soft: #151b23;
+            --text: #ffffff;
+            --muted: #b9c1cd;
+            --line: #2b3441;
+            --red: #d60000;
+            --red-bright: #ff2626;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-main);
+            background: radial-gradient(circle at 15% -20%, rgba(255,255,255,0.08), transparent 42%), var(--bg);
+            color: var(--text);
+            line-height: 1.55;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: min(1240px, 92%);
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 90px;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .video-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2.5px solid #ff2327;
+            box-shadow: 0 0 10px 2px #ff2327, 0 0 25px 5px #7a2020;
+            background: #171618;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text { display: flex; flex-direction: column; justify-content: center; }
+        .logo-text .brand { font-weight: 900; font-size: 1.5rem; letter-spacing: -1px; line-height: 1; }
+        .logo-text .location { color: #ffffff; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; }
+
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a {
+            color: #a1a1aa;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover,
+        .nav-links a.active { color: #fff; }
+
+        .hero {
+            padding-top: 132px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .hero-top { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; }
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .hero p { color: var(--muted); max-width: 700px; }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #e8edf5;
+            margin-bottom: 12px;
+        }
+
+        main { padding: 38px 0 80px; }
+
+        .shop-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .filter-btn {
+            border: 1px solid #3a4656;
+            background: #121821;
+            color: #d8dee9;
+            font-family: var(--font-main);
+            font-size: 0.68rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: #fff;
+            color: #fff;
+            box-shadow: 0 0 16px rgba(255,255,255,0.2);
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+            gap: 20px;
+            perspective: 1000px;
+        }
+
+        .shop-card {
+            background: linear-gradient(180deg, #171d26 0%, #0f141b 100%);
+            border: 1px solid var(--line);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s;
+            will-change: transform;
+        }
+
+        .shop-card:hover {
+            border-color: #eef2f7;
+            box-shadow: 0 22px 44px rgba(0,0,0,0.46), 0 0 30px rgba(255,255,255,0.16);
+        }
+
+        .shop-media {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+        }
+
+        .shop-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transform: scale(1.001);
+            transition: transform 0.45s ease;
+        }
+
+        .shop-card:hover .shop-media img { transform: scale(1.05); }
+
+        .shop-body { padding: 18px; }
+        .shop-name {
+            font-size: 0.92rem;
+            font-weight: 900;
+            line-height: 1.35;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            min-height: 48px;
+        }
+        .shop-desc {
+            color: var(--muted);
+            font-size: 0.84rem;
+            min-height: 62px;
+            margin-bottom: 12px;
+        }
+
+        .shop-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .shop-price { font-size: 1.1rem; font-weight: 900; color: #fff; }
+        .shop-cat {
+            border: 1px solid #455264;
+            color: #d4dce8;
+            padding: 6px 10px;
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-main);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            padding: 12px 18px;
+            font-size: 0.7rem;
+            transition: all 0.28s;
+        }
+
+        .btn-red {
+            background: var(--red);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(214,0,0,0.45);
+        }
+
+        .btn-red:hover {
+            background: var(--red-bright);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 38px rgba(214,0,0,0.6);
+        }
+
+        .shop-links {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.03);
+            padding: 22px;
+        }
+
+        .shop-links p { color: var(--muted); }
+        .socials { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 26px 0 36px;
+            text-align: center;
+            color: #8892a0;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 880px) {
+            .nav-links { display: none; }
+            .hero-top { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <a href="index.html" class="logo-box">
+                <div class="video-logo">
+                    <video autoplay muted loop playsinline style="width: auto; height: 120%; object-fit: contain; display: block;">
+                        <source src="videos/kuznya-spirit.mp4" type="video/mp4" />
+                    </video>
+                </div>
+                <div class="logo-text">
+                    <span class="brand">КУЗНЯ</span>
+                    <span class="location">SHOP</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="index.html#about">О нас</a>
+                <a href="index.html#empire-kuznya">Филиалы</a>
+                <a href="shop.html" class="active">Магазин</a>
+                <a href="index.html#contacts">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-top fade-up">
+            <div>
+                <span class="section-tag">Kuznya Shop</span>
+                <h1>Магазин экипировки</h1>
+                <p>Бойцовская экипировка и street-drop в ДНК «Кузни». Выбирай комплект, оформляй заказ и выходи в зал в правильной форме.</p>
+            </div>
+            <a class="btn btn-red" href="https://t.me/kuznyashop_manager" target="_blank" rel="noopener noreferrer">Заказать у менеджера</a>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <div class="shop-toolbar fade-up" id="filter-toolbar">
+                <button class="filter-btn active" data-filter="ALL" type="button">Все</button>
+                <button class="filter-btn" data-filter="COMBAT" type="button">Combat</button>
+                <button class="filter-btn" data-filter="STREET" type="button">Street</button>
+                <button class="filter-btn" data-filter="ACC" type="button">Acc</button>
+            </div>
+
+            <div id="shop-grid" class="shop-grid"></div>
+
+            <div class="shop-links fade-up">
+                <p>Канал и менеджер: Telegram, VK, Instagram. Ответ в рабочее время 10:00-22:00.</p>
+                <div class="socials">
+                    <a class="btn btn-red" href="https://t.me/kuznyashop" target="_blank" rel="noopener noreferrer">Telegram</a>
+                    <a class="btn btn-red" href="https://vk.com/kuznyashop" target="_blank" rel="noopener noreferrer">VK</a>
+                    <a class="btn btn-red" href="https://instagram.com/kuznyashop" target="_blank" rel="noopener noreferrer">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        © 2026 КУЗНЯ ШОП. Команда чемпионов с реальным боевым опытом.
+    </footer>
+
+    <script>
+        const FORGE_HERO_VIDEO = "https://assets.mixkit.co/videos/preview/mixkit-blacksmith-hitting-a-piece-of-metal-with-a-hammer-22749-large.mp4";
+
+        const SOCIAL_LINKS = {
+            telegram: "https://t.me/kuznyashop",
+            instagram: "https://instagram.com/kuznyashop",
+            vk: "https://vk.com/kuznyashop",
+            manager: "https://t.me/kuznyashop_manager"
+        };
+
+        const COLLECTION_TYPE = {
+            COMBAT: "COMBAT",
+            STREET: "STREET",
+            ACC: "ACC"
+        };
+
+        const PRODUCTS = [
+            { id: "0", name: 'КОСТЮМ "КУЗНЯ" #ЗАСВОИХ', price: 5500, category: COLLECTION_TYPE.COMBAT, image: 'https://i.ibb.co/0y015Vg1/Gemini-Generated-Image-fsh3gvfsh3gvfsh3.png', description: 'Лимитированная серия. Полный комплект: рашгард и шорты. "Не бывает плохих и хороших, бывают свои и чужие".' },
+            { id: "7", name: 'ШОРТЫ "КУЗНЯ" #ЗАСВОИХ', price: 3500, category: COLLECTION_TYPE.COMBAT, image: 'https://i.ibb.co/mVpgSWbR/Gemini-Generated-Image-xfn2vlxfn2vlxfn2.png', description: 'Бойцовские шорты с усиленными швами. Максимальная свобода движений в октагоне и на татами.' },
+            { id: "1", name: "ПЕРЧАТКИ IRON GRIP", price: 8500, category: COLLECTION_TYPE.COMBAT, image: 'https://images.unsplash.com/photo-1552072092-7f9b8d63efcb?q=80&w=800&auto=format&fit=crop', description: 'Кованая долговечность для профессиональных спаррингов.' },
+            { id: "2", name: "ХУДИ EMBER OVERSIZED", price: 6200, category: COLLECTION_TYPE.STREET, image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop', description: 'Минималистичный угольный хлопок со светоотражающими логотипами.' },
+            { id: "3", name: "БИНТЫ ANVIL", price: 1500, category: COLLECTION_TYPE.ACC, image: 'https://images.unsplash.com/photo-1517438476312-10d79c67750d?q=80&w=800&auto=format&fit=crop', description: 'Экстра-жесткая поддержка для тяжелых ударов.' },
+            { id: "4", name: "РАШГАРД SPARK", price: 4800, category: COLLECTION_TYPE.COMBAT, image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop', description: 'Компрессионная одежда с технологией теплоотвода.' },
+            { id: "5", name: 'МАЙКА "КУЗНЯ" CAMO', price: 3000, category: COLLECTION_TYPE.COMBAT, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=800&auto=format&fit=crop', description: 'Майка в камуфляжной расцветке с фирменным логотипом "Кузня". Закалена в боях.' },
+            { id: "6", name: 'КЕПКА "STEEL" KUZNYA', price: 2500, category: COLLECTION_TYPE.ACC, image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800&auto=format&fit=crop', description: 'Премиальный хлопок, объемная вышивка логотипа "Кузня". Драматичный черный, атлетичный крой. Выбор чемпионов.' }
+        ];
+
+        const FORGE_LOCATION = {
+            address: "г. Краснодар, ул. Академика Павлова 64 (3 этаж), Россия",
+            lat: 45.021,
+            lng: 39.014
+        };
+
+        const BRANCHES = [
+            { city: "Г. КРАСНОДАР", address: "ул. Академика Павлова 64 (3 этаж)", phone: "8 (914) 604-73-95", isMain: true },
+            { city: "ПОС. БЕЛОЗЕРНЫЙ", address: "Центральный район", phone: "+7 918 655-70-95" },
+            { city: "Г. АНАПА", address: "ул. Шевченко 24", phone: "+7 961 521-00-05" },
+            { city: "Г. СЕВАСТОПОЛЬ", address: "проспект Генерала Острякова 65 «А»", phone: "8 800 500-85-75" },
+            { city: "Г. УСТЬ-ЛАБИНСК", address: "ул. Ленина 66", phone: "+7 900 288-29-23" },
+            { city: "СТ. ХОЛМСКАЯ", address: "Районный центр", phone: "+7 961 596-45-89" },
+            { city: "СТ. РАЕВСКАЯ", address: "ул. Островского 16", phone: "+7 988 135-33-81" },
+            { city: "СТ. НАТУХАЕВСКАЯ", address: "ул. Красная 66", phone: "+7 988 135-33-81" }
+        ];
+
+        const grid = document.getElementById("shop-grid");
+        const filters = document.querySelectorAll(".filter-btn");
+        const formatPrice = new Intl.NumberFormat("ru-RU");
+
+        function cardTemplate(product) {
+            return `
+                <article class="shop-card fade-up" data-category="${product.category}">
+                    <div class="shop-media"><img src="${product.image}" alt="${product.name}" loading="lazy" /></div>
+                    <div class="shop-body">
+                        <h3 class="shop-name">${product.name}</h3>
+                        <p class="shop-desc">${product.description}</p>
+                        <div class="shop-meta">
+                            <span class="shop-price">${formatPrice.format(product.price)} ₽</span>
+                            <span class="shop-cat">${product.category}</span>
+                        </div>
+                        <a class="btn btn-red" href="${SOCIAL_LINKS.manager}" target="_blank" rel="noopener noreferrer">Купить</a>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderProducts(filter) {
+            const list = filter === "ALL" ? PRODUCTS : PRODUCTS.filter((p) => p.category === filter);
+            grid.innerHTML = list.map(cardTemplate).join("");
+            bindCardTilt();
+            revealObserver();
+        }
+
+        filters.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                filters.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+                renderProducts(btn.dataset.filter);
+            });
+        });
+
+        function bindCardTilt() {
+            document.querySelectorAll(".shop-card").forEach((card) => {
+                card.addEventListener("mousemove", (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const rx = ((y / rect.height) - 0.5) * -8;
+                    const ry = ((x / rect.width) - 0.5) * 10;
+                    card.style.transform = `translateY(-6px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+                });
+                card.addEventListener("mouseleave", () => {
+                    card.style.transform = "translateY(0) rotateX(0) rotateY(0)";
+                });
+            });
+        }
+
+        function revealObserver() {
+            const items = document.querySelectorAll(".fade-up");
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            items.forEach((item) => observer.observe(item));
+        }
+
+        renderProducts("ALL");
+    </script>
+</body>
+</html>
