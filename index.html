@@ -157,9 +157,13 @@
             left: 0;
             width: 100%;
             height: 100%;
+            min-width: 100%;
+            min-height: 100%;
             object-fit: cover;
+            object-position: center;
             z-index: 0;
             pointer-events: none;
+            -webkit-transform: translateZ(0);
         }
 
         .hero-overlay {
@@ -1383,9 +1387,141 @@
 
         /* --- Responsive --- */
         @media (max-width: 768px) {
-            h2 { font-size: 2rem; }
-            .nav-links { display: none; }
-            .btn { width: 100%; }
+            html {
+                scroll-padding-top: 68px;
+            }
+
+            header .nav {
+                height: 64px;
+            }
+
+            .video-logo {
+                width: 48px;
+                height: 48px;
+            }
+
+            .logo-text .brand {
+                font-size: 1.2rem;
+            }
+
+            section {
+                padding: 56px 0;
+            }
+
+            #about {
+                padding-top: 40px;
+                padding-bottom: 56px;
+            }
+
+            #empire-kuznya {
+                padding-top: 48px;
+                padding-bottom: 64px;
+            }
+
+            #coaches {
+                padding-top: 40px;
+                padding-bottom: 48px;
+            }
+
+            footer {
+                padding-top: 40px;
+                padding-bottom: 48px;
+            }
+
+            /* Hero — по центру, плотно к верху кроме шапки */
+            .hero {
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                padding: calc(64px + env(safe-area-inset-top, 0px))
+                    env(safe-area-inset-right, 0px)
+                    max(72px, env(safe-area-inset-bottom, 0px))
+                    env(safe-area-inset-left, 0px);
+                min-height: 100vh;
+                min-height: 100dvh;
+            }
+
+            .hero-overlay {
+                background: linear-gradient(
+                    180deg,
+                    rgba(0, 0, 0, 0.92) 0%,
+                    rgba(0, 0, 0, 0.55) 45%,
+                    rgba(0, 0, 0, 0.82) 100%
+                );
+            }
+
+            .hero-content {
+                max-width: none;
+                width: 100%;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                box-sizing: border-box;
+                padding-inline: clamp(14px, 4vw, 22px);
+            }
+
+            .hero .section-tag {
+                letter-spacing: 0.22em;
+            }
+
+            .hero h1 {
+                margin-inline: auto;
+            }
+
+            .hero p {
+                border-left: none;
+                padding-left: 0;
+                padding-top: 2px;
+                margin-inline: auto;
+                max-width: 92%;
+                text-align: center;
+            }
+
+            .hero p::after {
+                content: "";
+                display: block;
+                width: 40px;
+                height: 3px;
+                background: var(--red);
+                margin: 16px auto 0;
+            }
+
+            /* Запас под ИИ-триггер (уже не перекрывает правый край) */
+            .hero .btn-group {
+                justify-content: center;
+                padding-right: env(safe-area-inset-right, 0px);
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            /* ИИ-виджет: выше зоны кнопок, по правому краю с safe-area */
+            .ai-chat {
+                right: max(14px, env(safe-area-inset-right));
+                bottom: max(108px, calc(88px + env(safe-area-inset-bottom, 0px)));
+            }
+
+            .ai-chat-toggle {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+
+            .ai-chat-window {
+                right: 0;
+                left: auto;
+                bottom: 62px;
+            }
         }
     </style>
 </head>
@@ -1397,11 +1533,13 @@
         <div class="container nav">
             <a href="/" class="logo-box">
                 <div class="video-logo">
-                    <video 
-                        autoplay 
-                        muted 
-                        loop 
+                    <video
+                        autoplay
+                        muted
+                        loop
                         playsinline
+                        webkit-playsinline
+                        preload="metadata"
                         style="width: auto; height: 120%; object-fit: contain; display: block;"
                     >
                         <source src="videos/kuznya-spirit.mp4" type="video/mp4">
@@ -1760,10 +1898,21 @@
     <script>
         const heroVideo = document.querySelector('.hero-video');
         if (heroVideo) {
+            heroVideo.defaultMuted = true;
             heroVideo.muted = true;
             heroVideo.playsInline = true;
             heroVideo.play().catch(() => {});
+            document.addEventListener('visibilitychange', function () {
+                if (!document.hidden) heroVideo.play().catch(function () {});
+            });
         }
+
+        document.querySelectorAll('.video-logo video').forEach(function (embed) {
+            embed.defaultMuted = true;
+            embed.muted = true;
+            embed.playsInline = true;
+            embed.play().catch(function () {});
+        });
 
         // --- Sparks Effect ---
         const canvas = document.getElementById('sparks-canvas');
