@@ -1428,15 +1428,19 @@
                 padding-bottom: 48px;
             }
 
-            /* Hero — по центру, плотно к верху кроме шапки */
+            /* Hero: контент ниже шапки, без верт. центра экрана; строгая центровка. */
             .hero {
-                text-align: center;
+                display: flex;
+                flex-direction: row;
                 justify-content: center;
-                align-items: center;
-                padding: calc(64px + env(safe-area-inset-top, 0px))
-                    env(safe-area-inset-right, 0px)
-                    max(72px, env(safe-area-inset-bottom, 0px))
-                    env(safe-area-inset-left, 0px);
+                align-items: flex-start;
+                text-align: center;
+                padding-top: calc(
+                    env(safe-area-inset-top, 0px) + max(138px, 22vw)
+                );
+                padding-right: env(safe-area-inset-right, 0px);
+                padding-bottom: max(80px, env(safe-area-inset-bottom, 0px));
+                padding-left: env(safe-area-inset-left, 0px);
                 min-height: 100vh;
                 min-height: 100dvh;
             }
@@ -1451,9 +1455,12 @@
             }
 
             .hero-content {
+                flex: 0 1 auto;
                 max-width: none;
-                width: 100%;
-                margin: 0 auto;
+                width: min(620px, 100%);
+                margin: 0;
+                margin-left: auto;
+                margin-right: auto;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -1461,21 +1468,60 @@
                 padding-inline: clamp(14px, 4vw, 22px);
             }
 
-            .hero .section-tag {
-                letter-spacing: 0.22em;
+            /* Кикер: крупнее, letter-spacing, полупрозрачная красная линия */
+            .hero .section-tag:first-of-type {
+                font-size: clamp(0.8rem, 2.85vw, 0.92rem);
+                letter-spacing: 0.38em;
+                line-height: 1.38;
+                color: rgba(244, 244, 245, 0.95);
+                margin-bottom: 0;
+                padding-top: 6px;
+                padding-right: calc(env(safe-area-inset-right, 0px) + 0.38em);
+                padding-bottom: 0;
+                padding-left: env(safe-area-inset-left, 0px);
+                max-width: 100%;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .hero .section-tag:first-of-type::after {
+                content: "";
+                display: block;
+                width: min(220px, 72vw);
+                height: 2px;
+                margin: 16px auto 20px;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(214, 0, 0, 0.45),
+                    transparent
+                );
+                border-radius: 1px;
             }
 
             .hero h1 {
-                margin-inline: auto;
+                width: 100%;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 24px;
+                text-align: center;
+                text-wrap: balance;
             }
 
             .hero p {
                 border-left: none;
                 padding-left: 0;
-                padding-top: 2px;
-                margin-inline: auto;
-                max-width: 92%;
+                padding-top: 0;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 100%;
+                width: 100%;
                 text-align: center;
+                text-wrap: balance;
             }
 
             .hero p::after {
@@ -1487,9 +1533,10 @@
                 margin: 16px auto 0;
             }
 
-            /* Запас под ИИ-триггер (уже не перекрывает правый край) */
             .hero .btn-group {
                 justify-content: center;
+                align-self: stretch;
+                width: 100%;
                 padding-right: env(safe-area-inset-right, 0px);
             }
 
@@ -1505,7 +1552,6 @@
                 width: 100%;
             }
 
-            /* ИИ-виджет: выше зоны кнопок, по правому краю с safe-area */
             .ai-chat {
                 right: max(14px, env(safe-area-inset-right));
                 bottom: max(108px, calc(88px + env(safe-area-inset-bottom, 0px)));
@@ -1521,6 +1567,19 @@
                 right: 0;
                 left: auto;
                 bottom: 62px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .hero .section-tag:first-of-type {
+                font-size: 0.76rem;
+                letter-spacing: 0.26em;
+                padding-right: calc(env(safe-area-inset-right, 0px) + 0.26em);
+            }
+
+            .hero .section-tag:first-of-type::after {
+                margin-top: 12px;
+                margin-bottom: 16px;
             }
         }
     </style>
