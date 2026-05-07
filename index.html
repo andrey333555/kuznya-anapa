@@ -158,18 +158,21 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .hero-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(to right, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.4) 100%);
-            z-index: 0;
+            z-index: 1;
         }
 
         .hero-content {
             max-width: 800px;
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
@@ -1425,7 +1428,15 @@
 
     <main>
         <section class="hero">
-            <video class="hero-video" autoPlay muted loop playsInline>
+            <video
+                class="hero-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                webkit-playsinline
+                preload="auto"
+            >
                 <source src="videos/hero-video.mp4" type="video/mp4">
             </video>
             <div class="hero-overlay"></div>
@@ -1747,6 +1758,13 @@
     </div>
 
     <script>
+        const heroVideo = document.querySelector('.hero-video');
+        if (heroVideo) {
+            heroVideo.muted = true;
+            heroVideo.playsInline = true;
+            heroVideo.play().catch(() => {});
+        }
+
         // --- Sparks Effect ---
         const canvas = document.getElementById('sparks-canvas');
         const ctx = canvas.getContext('2d');
