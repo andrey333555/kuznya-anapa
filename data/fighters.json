@@ -16,7 +16,7 @@
       "Мастер спорта по рукопашному бою"
     ],
     "description": "Действующий чемпион PFL, представляющий клуб «Кузня» на мировой арене.",
-    "photo": "data/fighters/popov.png"
+    "photo": "images/fighters/popov.png"
   },
   {
     "id": "sergey-romanov",
