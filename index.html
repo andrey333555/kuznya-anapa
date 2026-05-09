@@ -312,7 +312,7 @@
 
         .champions-track {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
             gap: clamp(22px, 3vw, 32px);
             align-items: stretch;
         }
@@ -327,13 +327,12 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            align-self: stretch;
-            height: 100%;
             background: linear-gradient(165deg, #101012 0%, #060606 48%, #0b0b0d 100%);
             border: 1px solid #2c2c30;
             border-radius: 2px;
             overflow: hidden;
             min-height: 520px;
+            height: 100%;
             transition:
                 transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
                 box-shadow 0.45s ease,
@@ -511,7 +510,6 @@
 
             .champions-track {
                 display: flex;
-                align-items: stretch;
                 width: max-content;
                 margin-inline: auto;
                 gap: 18px;
@@ -520,7 +518,6 @@
 
             .champion-card {
                 flex: 0 0 min(320px, 82vw);
-                align-self: stretch;
                 scroll-snap-align: center;
                 min-height: 500px;
             }
@@ -1184,19 +1181,7 @@
             overflow: hidden;
         }
 
-        .mk-portrait-img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center top;
-            z-index: 0;
-        }
-
         .mk-fullname {
-            position: relative;
-            z-index: 2;
             font-size: clamp(1.8rem, 3.4vw, 2.8rem);
             font-weight: 900;
             text-transform: uppercase;
@@ -1204,19 +1189,6 @@
             color: #fff;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.22);
             transition: opacity 0.26s ease;
-            padding: 0 14px;
-            text-align: center;
-        }
-
-        .mk-fullname.mk-fullname--overlay {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 18px 14px 16px;
-            margin: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.92));
-            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85);
         }
 
         .mk-bio h3 {
@@ -1258,9 +1230,18 @@
             background: #0a0a0b;
             padding: 18px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
             gap: 12px;
-            align-items: stretch;
+        }
+
+        .mk-grid.mk-grid--pair {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @media (max-width: 520px) {
+            .mk-grid.mk-grid--pair {
+                grid-template-columns: 1fr;
+            }
         }
 
         .mk-fighter {
@@ -1306,16 +1287,6 @@
         @media (max-width: 980px) {
             .mk-directions-wrap {
                 grid-template-columns: 1fr;
-            }
-
-            .mk-grid {
-                grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-            }
-        }
-
-        @media (max-width: 760px) {
-            .mk-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
@@ -2130,18 +2101,21 @@
                 <h2 class="reveal">Выбор бойцов</h2>
                 <div class="mk-directions-wrap reveal">
                     <article class="mk-profile" id="fighter-profile">
-                        <span class="mk-profile-tag" id="fighter-division">—</span>
+                        <span class="mk-profile-tag" id="fighter-division">Тяжёлый вес (до 120 кг)</span>
                         <div class="mk-portrait-stage">
-                            <img class="mk-portrait-img" id="fighter-portrait-img" alt="" width="600" height="800" decoding="async" hidden />
-                            <div class="mk-fullname" id="fighter-stage-name">Загрузка…</div>
+                            <div class="mk-fullname" id="fighter-stage-name">ОЛЕГ ПОПОВ</div>
                         </div>
                         <div class="mk-bio">
-                            <h3 id="fighter-name">—</h3>
-                            <p id="fighter-achievements">Подтягиваем карточку из fighters.json.</p>
-                            <div class="mk-meta" id="fighter-meta"></div>
+                            <h3 id="fighter-name">Олег Попов</h3>
+                            <p id="fighter-achievements">Действующий чемпион PFL, представляющий клуб «Кузня» на мировой арене.</p>
+                            <div class="mk-meta" id="fighter-meta">
+                                <span class="mk-chip">Рекорд 23-2</span>
+                                <span class="mk-chip">«Двужильный»</span>
+                                <span class="mk-chip">Чемпион PFL в тяжёлом весе (2025)</span>
+                            </div>
                         </div>
                     </article>
-                    <div class="mk-grid" id="mk-directions-grid" role="listbox" aria-label="Выбор бойца"></div>
+                    <div class="mk-grid mk-grid--pair" id="mk-fighter-grid" role="listbox" aria-label="Выбор бойца"></div>
                 </div>
             </div>
         </section>
@@ -2347,10 +2321,15 @@
         window.addEventListener("scroll", reveal);
         reveal(); // Запуск при загрузке
 
-        // --- data/fighters.json: ростер «Наши чемпионы» + переключатель в «Направлениях» ---
+        // --- Бойцы: ростер + «Выбор бойцов» (один запрос data/fighters.json) ---
         (function () {
             var championsRoot = document.getElementById("champions-track");
-            var directionsGrid = document.getElementById("mk-directions-grid");
+            var mkGrid = document.getElementById("mk-fighter-grid");
+            var divEl = document.getElementById("fighter-division");
+            var stageEl = document.getElementById("fighter-stage-name");
+            var nameEl = document.getElementById("fighter-name");
+            var achEl = document.getElementById("fighter-achievements");
+            var metaEl = document.getElementById("fighter-meta");
 
             function esc(s) {
                 return String(s === null || s === undefined ? "" : s)
@@ -2359,25 +2338,93 @@
                     .replace(/"/g, "&quot;");
             }
 
-            function escAttr(s) {
-                return String(s === null || s === undefined ? "" : s)
-                    .replace(/&/g, "&amp;")
-                    .replace(/"/g, "&quot;");
-            }
-
-            function initials(name) {
-                var parts = String(name || "")
+            function initials(fullName) {
+                var parts = String(fullName || "")
                     .trim()
                     .split(/\s+/)
                     .filter(Boolean);
-                if (!parts.length) return "—";
-                var first = parts[0].charAt(0);
-                var last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : "";
-                return (first + last).toUpperCase();
+                if (parts.length >= 2) {
+                    return (
+                        parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
+                    ).toUpperCase();
+                }
+                return String(fullName || "БЦ")
+                    .slice(0, 2)
+                    .toUpperCase();
             }
 
-            function upperName(name) {
-                return String(name || "").trim().toUpperCase();
+            function applyMkProfile(f) {
+                if (!f || !divEl || !stageEl || !nameEl || !achEl || !metaEl) return;
+                divEl.textContent = f.category || "MMA";
+                stageEl.textContent = String(f.name || "").toUpperCase();
+                nameEl.textContent = f.name || "";
+                achEl.textContent = f.description || "";
+
+                var chips = [];
+                if (f.record) chips.push("Рекорд " + f.record);
+                if (f.nickname) chips.push("«" + f.nickname + "»");
+                var titles = Array.isArray(f.titles) ? f.titles : [];
+                titles.slice(0, 2).forEach(function (t) {
+                    chips.push(t.length > 44 ? t.slice(0, 42) + "…" : t);
+                });
+
+                metaEl.innerHTML = chips
+                    .map(function (c) {
+                        return '<span class="mk-chip">' + esc(c) + "</span>";
+                    })
+                    .join("");
+            }
+
+            function setupMkDirections(fighters) {
+                if (!mkGrid || !fighters.length) return;
+
+                mkGrid.innerHTML = fighters
+                    .map(function (f, idx) {
+                        var active = idx === 0 ? " active" : "";
+                        var sel = idx === 0 ? "true" : "false";
+                        return (
+                            '<button type="button" class="mk-fighter' +
+                            active +
+                            '" data-fighter-id="' +
+                            esc(f.id || "") +
+                            '" aria-selected="' +
+                            sel +
+                            '" role="option">' +
+                            '<span class="mk-thumb">' +
+                            esc(initials(f.name)) +
+                            "</span>" +
+                            '<span class="mk-name">' +
+                            esc(f.name || "") +
+                            "</span>" +
+                            "</button>"
+                        );
+                    })
+                    .join("");
+
+                mkGrid.classList.toggle("mk-grid--pair", fighters.length <= 2);
+
+                applyMkProfile(fighters[0]);
+
+                mkGrid.querySelectorAll(".mk-fighter").forEach(function (btn) {
+                    btn.addEventListener("click", function () {
+                        var id = btn.getAttribute("data-fighter-id") || "";
+                        var picked = null;
+                        for (var i = 0; i < fighters.length; i++) {
+                            if ((fighters[i].id || "") === id) {
+                                picked = fighters[i];
+                                break;
+                            }
+                        }
+                        if (!picked) return;
+
+                        mkGrid.querySelectorAll(".mk-fighter").forEach(function (b) {
+                            var on = b === btn;
+                            b.classList.toggle("active", on);
+                            b.setAttribute("aria-selected", on ? "true" : "false");
+                        });
+                        applyMkProfile(picked);
+                    });
+                });
             }
 
             function renderChampions(fighters) {
@@ -2385,7 +2432,7 @@
 
                 if (!Array.isArray(fighters) || fighters.length === 0) {
                     championsRoot.innerHTML =
-                        '<p class="champions-empty">Ростер готовится — добавь бойцов в data/fighters.json.</p>';
+                        '<p class="champions-empty">Ростер готовится — данные добавим сюда тем же файлом fighters.json.</p>';
                     reveal();
                     return;
                 }
@@ -2428,14 +2475,14 @@
 
                         return (
                             '<article class="champion-card reveal" data-fighter-id="' +
-                            escAttr(f.id || "") +
+                            esc(f.id || "") +
                             '">' +
                             '<div class="champion-photo">' +
                             (f.record ? '<span class="champion-record-pill">' + esc(f.record) + "</span>" : "") +
                             imgBlock +
                             "</div>" +
                             '<div class="champion-body">' +
-                            '<h3 class="champion-name">' +
+                            "<h3 class=\"champion-name\">" +
                             esc(f.name || "") +
                             "</h3>" +
                             (f.nickname
@@ -2454,130 +2501,21 @@
                 reveal();
             }
 
-            function applyDirectionsProfile(f) {
-                var divisionEl = document.getElementById("fighter-division");
-                var stageNameEl = document.getElementById("fighter-stage-name");
-                var nameEl = document.getElementById("fighter-name");
-                var achEl = document.getElementById("fighter-achievements");
-                var metaEl = document.getElementById("fighter-meta");
-                var imgEl = document.getElementById("fighter-portrait-img");
-                if (!divisionEl || !stageNameEl || !nameEl || !achEl || !metaEl || !imgEl) return;
-
-                divisionEl.textContent = f.category || "MMA";
-                stageNameEl.textContent = upperName(f.name);
-                nameEl.textContent = f.name || "";
-                achEl.textContent = f.description || "";
-
-                metaEl.innerHTML = "";
-                function chip(label) {
-                    var span = document.createElement("span");
-                    span.className = "mk-chip";
-                    span.textContent = label;
-                    metaEl.appendChild(span);
-                }
-                if (f.record) chip("Рекорд " + f.record);
-                if (f.stats && typeof f.stats === "object") {
-                    chip("KO " + (f.stats.ko != null ? f.stats.ko : "—"));
-                    chip("SUB " + (f.stats.sub != null ? f.stats.sub : "—"));
-                    chip("DEC " + (f.stats.dec != null ? f.stats.dec : "—"));
-                }
-                var titles = Array.isArray(f.titles) ? f.titles : [];
-                titles.slice(0, 2).forEach(function (t) {
-                    chip(t);
-                });
-
-                if (f.photo) {
-                    imgEl.src = f.photo;
-                    imgEl.alt = f.name || "";
-                    imgEl.hidden = false;
-                    stageNameEl.classList.add("mk-fullname--overlay");
-                } else {
-                    imgEl.removeAttribute("src");
-                    imgEl.alt = "";
-                    imgEl.hidden = true;
-                    stageNameEl.classList.remove("mk-fullname--overlay");
-                }
-            }
-
-            function setupDirections(fighters) {
-                if (!directionsGrid) return;
-
-                if (!Array.isArray(fighters) || fighters.length === 0) {
-                    directionsGrid.innerHTML =
-                        '<p style="grid-column:1/-1;color:#a1a1aa;font-weight:700;padding:12px;text-align:center;">Добавь бойцов в data/fighters.json — кнопки подтянутся автоматически.</p>';
-                    return;
-                }
-
-                directionsGrid.innerHTML = fighters
-                    .map(function (f, i) {
-                        var active = i === 0;
-                        return (
-                            '<button type="button" class="mk-fighter' +
-                            (active ? " active" : "") +
-                            '" data-fighter-id="' +
-                            escAttr(f.id || "") +
-                            '" aria-selected="' +
-                            (active ? "true" : "false") +
-                            '">' +
-                            '<span class="mk-thumb">' +
-                            esc(initials(f.name)) +
-                            "</span>" +
-                            '<span class="mk-name">' +
-                            esc(f.name || "") +
-                            "</span>" +
-                            "</button>"
-                        );
-                    })
-                    .join("");
-
-                directionsGrid.addEventListener("click", function (e) {
-                    var btn = e.target.closest(".mk-fighter");
-                    if (!btn || !directionsGrid.contains(btn)) return;
-                    var id = btn.getAttribute("data-fighter-id") || "";
-                    var chosen = null;
-                    for (var j = 0; j < fighters.length; j++) {
-                        if ((fighters[j].id || "") === id) {
-                            chosen = fighters[j];
-                            break;
-                        }
-                    }
-                    if (!chosen) return;
-
-                    directionsGrid.querySelectorAll(".mk-fighter").forEach(function (b) {
-                        var on = b === btn;
-                        b.classList.toggle("active", on);
-                        b.setAttribute("aria-selected", on ? "true" : "false");
-                    });
-                    applyDirectionsProfile(chosen);
-                });
-
-                applyDirectionsProfile(fighters[0]);
-            }
-
             fetch("data/fighters.json", { credentials: "same-origin" })
                 .then(function (r) {
                     if (!r.ok) throw new Error("fighters json");
                     return r.json();
                 })
-                .then(function (data) {
-                    var fighters = Array.isArray(data) ? data : [];
-                    renderChampions(fighters);
-                    setupDirections(fighters);
+                .then(function (fighters) {
+                    var list = Array.isArray(fighters) ? fighters : [];
+                    renderChampions(list);
+                    setupMkDirections(list);
                 })
                 .catch(function () {
                     if (championsRoot) {
                         championsRoot.innerHTML =
                             '<p class="champions-empty">Не удалось загрузить fighters.json — проверь путь после деплоя.</p>';
                         reveal();
-                    }
-                    if (directionsGrid) {
-                        directionsGrid.innerHTML =
-                            '<p style="grid-column:1/-1;color:#a1a1aa;font-weight:700;padding:12px;text-align:center;">Не удалось загрузить fighters.json.</p>';
-                    }
-                    var ach = document.getElementById("fighter-achievements");
-                    if (ach) {
-                        ach.textContent =
-                            "Не удалось загрузить данные бойца. Проверь публикацию файла data/fighters.json.";
                     }
                 });
         })();
