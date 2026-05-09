@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кузня Анапа — Бойцовский клуб | Система Чемпионов</title>
+    <title>Кузня Анапа</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
@@ -312,15 +312,23 @@
 
         .champions-track {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
             gap: clamp(22px, 3vw, 32px);
             align-items: stretch;
+        }
+
+        @media (min-width: 720px) {
+            .champions-track {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
         }
 
         .champion-card {
             position: relative;
             display: flex;
             flex-direction: column;
+            align-self: stretch;
+            height: 100%;
             background: linear-gradient(165deg, #101012 0%, #060606 48%, #0b0b0d 100%);
             border: 1px solid #2c2c30;
             border-radius: 2px;
@@ -503,6 +511,7 @@
 
             .champions-track {
                 display: flex;
+                align-items: stretch;
                 width: max-content;
                 margin-inline: auto;
                 gap: 18px;
@@ -511,6 +520,7 @@
 
             .champion-card {
                 flex: 0 0 min(320px, 82vw);
+                align-self: stretch;
                 scroll-snap-align: center;
                 min-height: 500px;
             }
@@ -1174,7 +1184,19 @@
             overflow: hidden;
         }
 
+        .mk-portrait-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            z-index: 0;
+        }
+
         .mk-fullname {
+            position: relative;
+            z-index: 2;
             font-size: clamp(1.8rem, 3.4vw, 2.8rem);
             font-weight: 900;
             text-transform: uppercase;
@@ -1182,6 +1204,19 @@
             color: #fff;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.22);
             transition: opacity 0.26s ease;
+            padding: 0 14px;
+            text-align: center;
+        }
+
+        .mk-fullname.mk-fullname--overlay {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 18px 14px 16px;
+            margin: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.92));
+            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85);
         }
 
         .mk-bio h3 {
@@ -1223,8 +1258,9 @@
             background: #0a0a0b;
             padding: 18px;
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 12px;
+            align-items: stretch;
         }
 
         .mk-fighter {
@@ -1273,7 +1309,7 @@
             }
 
             .mk-grid {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
             }
         }
 
@@ -2094,54 +2130,18 @@
                 <h2 class="reveal">Выбор бойцов</h2>
                 <div class="mk-directions-wrap reveal">
                     <article class="mk-profile" id="fighter-profile">
-                        <span class="mk-profile-tag" id="fighter-division">MMA / Бокс</span>
+                        <span class="mk-profile-tag" id="fighter-division">—</span>
                         <div class="mk-portrait-stage">
-                            <div class="mk-fullname" id="fighter-stage-name">АРТЕМ ГРОМОВ</div>
+                            <img class="mk-portrait-img" id="fighter-portrait-img" alt="" width="600" height="800" decoding="async" hidden />
+                            <div class="mk-fullname" id="fighter-stage-name">Загрузка…</div>
                         </div>
                         <div class="mk-bio">
-                            <h3 id="fighter-name">Артем Громов</h3>
-                            <p id="fighter-achievements">КМС по боксу, победитель региональных гран-при по ММА, 12 лет соревновательной практики.</p>
-                            <div class="mk-meta" id="fighter-meta">
-                                <span class="mk-chip">MMA</span>
-                                <span class="mk-chip">Бокс</span>
-                                <span class="mk-chip">Ударная техника</span>
-                            </div>
+                            <h3 id="fighter-name">—</h3>
+                            <p id="fighter-achievements">Подтягиваем карточку из fighters.json.</p>
+                            <div class="mk-meta" id="fighter-meta"></div>
                         </div>
                     </article>
-                    <div class="mk-grid" role="listbox" aria-label="Выбор бойца">
-                        <button type="button" class="mk-fighter active" data-fighter="f1" aria-selected="true">
-                            <span class="mk-thumb">АГ</span>
-                            <span class="mk-name">Артем Громов</span>
-                        </button>
-                        <button type="button" class="mk-fighter" data-fighter="f2" aria-selected="false">
-                            <span class="mk-thumb">ДВ</span>
-                            <span class="mk-name">Денис Ворон</span>
-                        </button>
-                        <button type="button" class="mk-fighter" data-fighter="f3" aria-selected="false">
-                            <span class="mk-thumb">МК</span>
-                            <span class="mk-name">Максим Клинч</span>
-                        </button>
-                        <button type="button" class="mk-fighter" data-fighter="f4" aria-selected="false">
-                            <span class="mk-thumb">ИЛ</span>
-                            <span class="mk-name">Илья Лев</span>
-                        </button>
-                        <button type="button" class="mk-fighter" data-fighter="f5" aria-selected="false">
-                            <span class="mk-thumb">РУ</span>
-                            <span class="mk-name">Роман Удар</span>
-                        </button>
-                        <button type="button" class="mk-fighter" data-fighter="f6" aria-selected="false">
-                            <span class="mk-thumb">БШ</span>
-                            <span class="mk-name">Батыр Шторм</span>
-                        </button>
-                        <button type="button" class="mk-fighter" data-fighter="f7" aria-selected="false">
-                            <span class="mk-thumb">АК</span>
-                            <span class="mk-name">Алексей Кобра</span>
-                        </button>
-                        <button type="button" class="mk-fighter" data-fighter="f8" aria-selected="false">
-                            <span class="mk-thumb">СП</span>
-                            <span class="mk-name">Сергей Пульс</span>
-                        </button>
-                    </div>
+                    <div class="mk-grid" id="mk-directions-grid" role="listbox" aria-label="Выбор бойца"></div>
                 </div>
             </div>
         </section>
@@ -2347,10 +2347,10 @@
         window.addEventListener("scroll", reveal);
         reveal(); // Запуск при загрузке
 
-        // --- Чемпионы: data/fighters.json ---
+        // --- data/fighters.json: ростер «Наши чемпионы» + переключатель в «Направлениях» ---
         (function () {
-            var root = document.getElementById("champions-track");
-            if (!root) return;
+            var championsRoot = document.getElementById("champions-track");
+            var directionsGrid = document.getElementById("mk-directions-grid");
 
             function esc(s) {
                 return String(s === null || s === undefined ? "" : s)
@@ -2359,15 +2359,38 @@
                     .replace(/"/g, "&quot;");
             }
 
-            function render(fighters) {
+            function escAttr(s) {
+                return String(s === null || s === undefined ? "" : s)
+                    .replace(/&/g, "&amp;")
+                    .replace(/"/g, "&quot;");
+            }
+
+            function initials(name) {
+                var parts = String(name || "")
+                    .trim()
+                    .split(/\s+/)
+                    .filter(Boolean);
+                if (!parts.length) return "—";
+                var first = parts[0].charAt(0);
+                var last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : "";
+                return (first + last).toUpperCase();
+            }
+
+            function upperName(name) {
+                return String(name || "").trim().toUpperCase();
+            }
+
+            function renderChampions(fighters) {
+                if (!championsRoot) return;
+
                 if (!Array.isArray(fighters) || fighters.length === 0) {
-                    root.innerHTML =
-                        '<p class="champions-empty">Ростер готовится — данные добавим сюда тем же файлом fighters.json.</p>';
+                    championsRoot.innerHTML =
+                        '<p class="champions-empty">Ростер готовится — добавь бойцов в data/fighters.json.</p>';
                     reveal();
                     return;
                 }
 
-                root.innerHTML = fighters
+                championsRoot.innerHTML = fighters
                     .map(function (f) {
                         var titles = Array.isArray(f.titles) ? f.titles : [];
                         var titleLis = titles
@@ -2405,14 +2428,14 @@
 
                         return (
                             '<article class="champion-card reveal" data-fighter-id="' +
-                            esc(f.id || "") +
+                            escAttr(f.id || "") +
                             '">' +
                             '<div class="champion-photo">' +
                             (f.record ? '<span class="champion-record-pill">' + esc(f.record) + "</span>" : "") +
                             imgBlock +
                             "</div>" +
                             '<div class="champion-body">' +
-                            "<h3 class=\"champion-name\">" +
+                            '<h3 class="champion-name">' +
                             esc(f.name || "") +
                             "</h3>" +
                             (f.nickname
@@ -2431,16 +2454,131 @@
                 reveal();
             }
 
+            function applyDirectionsProfile(f) {
+                var divisionEl = document.getElementById("fighter-division");
+                var stageNameEl = document.getElementById("fighter-stage-name");
+                var nameEl = document.getElementById("fighter-name");
+                var achEl = document.getElementById("fighter-achievements");
+                var metaEl = document.getElementById("fighter-meta");
+                var imgEl = document.getElementById("fighter-portrait-img");
+                if (!divisionEl || !stageNameEl || !nameEl || !achEl || !metaEl || !imgEl) return;
+
+                divisionEl.textContent = f.category || "MMA";
+                stageNameEl.textContent = upperName(f.name);
+                nameEl.textContent = f.name || "";
+                achEl.textContent = f.description || "";
+
+                metaEl.innerHTML = "";
+                function chip(label) {
+                    var span = document.createElement("span");
+                    span.className = "mk-chip";
+                    span.textContent = label;
+                    metaEl.appendChild(span);
+                }
+                if (f.record) chip("Рекорд " + f.record);
+                if (f.stats && typeof f.stats === "object") {
+                    chip("KO " + (f.stats.ko != null ? f.stats.ko : "—"));
+                    chip("SUB " + (f.stats.sub != null ? f.stats.sub : "—"));
+                    chip("DEC " + (f.stats.dec != null ? f.stats.dec : "—"));
+                }
+                var titles = Array.isArray(f.titles) ? f.titles : [];
+                titles.slice(0, 2).forEach(function (t) {
+                    chip(t);
+                });
+
+                if (f.photo) {
+                    imgEl.src = f.photo;
+                    imgEl.alt = f.name || "";
+                    imgEl.hidden = false;
+                    stageNameEl.classList.add("mk-fullname--overlay");
+                } else {
+                    imgEl.removeAttribute("src");
+                    imgEl.alt = "";
+                    imgEl.hidden = true;
+                    stageNameEl.classList.remove("mk-fullname--overlay");
+                }
+            }
+
+            function setupDirections(fighters) {
+                if (!directionsGrid) return;
+
+                if (!Array.isArray(fighters) || fighters.length === 0) {
+                    directionsGrid.innerHTML =
+                        '<p style="grid-column:1/-1;color:#a1a1aa;font-weight:700;padding:12px;text-align:center;">Добавь бойцов в data/fighters.json — кнопки подтянутся автоматически.</p>';
+                    return;
+                }
+
+                directionsGrid.innerHTML = fighters
+                    .map(function (f, i) {
+                        var active = i === 0;
+                        return (
+                            '<button type="button" class="mk-fighter' +
+                            (active ? " active" : "") +
+                            '" data-fighter-id="' +
+                            escAttr(f.id || "") +
+                            '" aria-selected="' +
+                            (active ? "true" : "false") +
+                            '">' +
+                            '<span class="mk-thumb">' +
+                            esc(initials(f.name)) +
+                            "</span>" +
+                            '<span class="mk-name">' +
+                            esc(f.name || "") +
+                            "</span>" +
+                            "</button>"
+                        );
+                    })
+                    .join("");
+
+                directionsGrid.addEventListener("click", function (e) {
+                    var btn = e.target.closest(".mk-fighter");
+                    if (!btn || !directionsGrid.contains(btn)) return;
+                    var id = btn.getAttribute("data-fighter-id") || "";
+                    var chosen = null;
+                    for (var j = 0; j < fighters.length; j++) {
+                        if ((fighters[j].id || "") === id) {
+                            chosen = fighters[j];
+                            break;
+                        }
+                    }
+                    if (!chosen) return;
+
+                    directionsGrid.querySelectorAll(".mk-fighter").forEach(function (b) {
+                        var on = b === btn;
+                        b.classList.toggle("active", on);
+                        b.setAttribute("aria-selected", on ? "true" : "false");
+                    });
+                    applyDirectionsProfile(chosen);
+                });
+
+                applyDirectionsProfile(fighters[0]);
+            }
+
             fetch("data/fighters.json", { credentials: "same-origin" })
                 .then(function (r) {
                     if (!r.ok) throw new Error("fighters json");
                     return r.json();
                 })
-                .then(render)
+                .then(function (data) {
+                    var fighters = Array.isArray(data) ? data : [];
+                    renderChampions(fighters);
+                    setupDirections(fighters);
+                })
                 .catch(function () {
-                    root.innerHTML =
-                        '<p class="champions-empty">Не удалось загрузить fighters.json — проверь путь после деплоя.</p>';
-                    reveal();
+                    if (championsRoot) {
+                        championsRoot.innerHTML =
+                            '<p class="champions-empty">Не удалось загрузить fighters.json — проверь путь после деплоя.</p>';
+                        reveal();
+                    }
+                    if (directionsGrid) {
+                        directionsGrid.innerHTML =
+                            '<p style="grid-column:1/-1;color:#a1a1aa;font-weight:700;padding:12px;text-align:center;">Не удалось загрузить fighters.json.</p>';
+                    }
+                    var ach = document.getElementById("fighter-achievements");
+                    if (ach) {
+                        ach.textContent =
+                            "Не удалось загрузить данные бойца. Проверь публикацию файла data/fighters.json.";
+                    }
                 });
         })();
 
