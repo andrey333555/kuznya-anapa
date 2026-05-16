@@ -332,7 +332,7 @@
             display: block;
         }
 
-        .coach-head-badge {
+        .coach-branch-badge {
             position: absolute;
             top: 12px;
             left: 12px;
@@ -2344,7 +2344,7 @@
             <div class="container">
                 <span class="section-tag reveal">Команда</span>
                 <h2 class="reveal">Тренерский состав</h2>
-                <p class="reveal coaches-lead">Главный тренер клуба — ударная школа мирового уровня. Остальной состав по филиалам — в разделе «Империя Кузни».</p>
+                <p class="reveal coaches-lead">Тренер филиала Анапа — ударная школа мирового уровня. Остальной состав по другим городам — в разделе «Империя Кузни».</p>
             </div>
             <div id="coach-feature" class="coach-feature reveal" hidden aria-live="polite"></div>
             <p class="coaches-footnote reveal">Тренеры филиалов: Анапа, Краснодар, Севастополь и регион — в карточках залов.</p>
@@ -2978,13 +2978,12 @@
                 featureEl.innerHTML =
                     '<article class="coach-feature-inner">' +
                     '<div class="coach-feature-photo">' +
-                    '<span class="coach-head-badge">Главный тренер</span>' +
+                    '<span class="coach-branch-badge">' +
+                    esc(c.role || "Тренер филиала Анапа") +
+                    "</span>" +
                     img +
                     "</div>" +
                     '<div class="coach-feature-info">' +
-                    '<span class="cf-role">' +
-                    esc(c.role || "Тренер") +
-                    "</span>" +
                     '<h3 class="cf-name">' +
                     esc(c.name || "") +
                     "</h3>" +
