@@ -269,13 +269,188 @@
 
         #coaches {
             padding: 88px 0 96px;
+            background:
+                radial-gradient(ellipse 85% 42% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 58%),
+                var(--bg);
+            border-bottom: 1px solid var(--line);
         }
 
         #coaches .coaches-lead {
             color: var(--muted);
             font-weight: 700;
             max-width: 560px;
-            margin-bottom: 22px;
+            margin-bottom: 32px;
+        }
+
+        .coach-feature {
+            max-width: min(1100px, 92%);
+            margin: 0 auto;
+            padding: 0 max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right));
+            box-sizing: border-box;
+        }
+
+        .coach-feature[hidden] {
+            display: none !important;
+        }
+
+        .coach-feature-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+            gap: clamp(22px, 4vw, 44px);
+            align-items: stretch;
+            border: 1px solid #34343a;
+            background: linear-gradient(165deg, #121214 0%, #070707 50%, #0c0c0e 100%);
+            padding: clamp(20px, 3vw, 32px);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.06),
+                0 28px 56px rgba(0, 0, 0, 0.55);
+            min-height: 300px;
+        }
+
+        .coach-feature-photo {
+            position: relative;
+            border: 1px solid #3a3a42;
+            background:
+                radial-gradient(circle at 50% 18%, #2a2a30 0%, #0a0a0c 72%),
+                repeating-linear-gradient(
+                    -10deg,
+                    transparent,
+                    transparent 7px,
+                    rgba(255, 255, 255, 0.02) 7px,
+                    rgba(255, 255, 255, 0.02) 8px
+                );
+            overflow: hidden;
+            min-height: 300px;
+        }
+
+        .coach-feature-photo img {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .coach-head-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 2;
+            font-size: 0.62rem;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 8px 11px;
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #fafafa;
+        }
+
+        .coach-feature-info .cf-role {
+            font-size: 0.68rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #d4d4d8;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .coach-feature-info .cf-name {
+            font-size: clamp(1.55rem, 3vw, 2.15rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1.08;
+            margin: 0 0 6px;
+        }
+
+        .coach-feature-info .cf-nick {
+            margin: 0 0 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #e4e4e7;
+            letter-spacing: 0.04em;
+        }
+
+        .coach-feature-info .cf-rank {
+            margin: 0 0 14px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #a1a1aa;
+            line-height: 1.45;
+            max-width: 52ch;
+        }
+
+        .coach-feature-info .cf-desc {
+            color: #d1d5db;
+            font-size: 0.94rem;
+            line-height: 1.55;
+            margin-bottom: 12px;
+            max-width: 58ch;
+        }
+
+        .cf-titles {
+            list-style: none;
+            margin: 0;
+            padding: 14px 0 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cf-titles li {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #d4d4d8;
+            line-height: 1.45;
+            padding: 5px 0 5px 14px;
+            position: relative;
+        }
+
+        .cf-titles li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.72em;
+            width: 5px;
+            height: 5px;
+            background: #fafafa;
+            border-radius: 1px;
+            opacity: 0.75;
+        }
+
+        .coaches-empty {
+            text-align: center;
+            color: var(--muted);
+            font-weight: 700;
+            padding: 36px 20px;
+            max-width: min(1100px, 92%);
+            margin: 0 auto;
+        }
+
+        .coaches-footnote {
+            max-width: min(1100px, 92%);
+            margin: 20px auto 0;
+            padding: 0 max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right));
+            color: #71717a;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        @media (max-width: 820px) {
+            .coach-feature-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .coach-feature-photo {
+                min-height: 280px;
+                max-height: 400px;
+            }
+
+            .coach-feature-photo img {
+                min-height: 280px;
+                max-height: 400px;
+            }
         }
 
         /* --- Наши чемпионы: деталь сверху + карусель снизу --- */
@@ -2168,10 +2343,11 @@
         <section id="coaches">
             <div class="container">
                 <span class="section-tag reveal">Команда</span>
-                <h2 class="reveal">Тренеры</h2>
-                <p class="reveal coaches-lead">Фото и состав тренеров указаны в карточке каждого зала — откройте раздел «Империя Кузни», выберите город и адрес филиала.</p>
-                <a href="#empire-kuznya" class="btn btn-outline reveal">К филиалам</a>
+                <h2 class="reveal">Тренерский состав</h2>
+                <p class="reveal coaches-lead">Главный тренер клуба — ударная школа мирового уровня. Остальной состав по филиалам — в разделе «Империя Кузни».</p>
             </div>
+            <div id="coach-feature" class="coach-feature reveal" hidden aria-live="polite"></div>
+            <p class="coaches-footnote reveal">Тренеры филиалов: Анапа, Краснодар, Севастополь и регион — в карточках залов.</p>
         </section>
 
         <section id="champions">
@@ -2759,6 +2935,93 @@
                     emptyState(
                         "Не удалось загрузить fighters.json — проверь путь после деплоя."
                     );
+                });
+        })();
+
+        // --- Тренерский состав: data/coaches.json ---
+        (function () {
+            var featureEl = document.getElementById("coach-feature");
+            if (!featureEl) return;
+
+            function esc(s) {
+                return String(s === null || s === undefined ? "" : s)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/"/g, "&quot;");
+            }
+
+            function pickHeadCoach(list) {
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i].head) return list[i];
+                }
+                return list[0] || null;
+            }
+
+            function renderCoach(c) {
+                var titles = Array.isArray(c.titles) ? c.titles : [];
+                var lis = titles
+                    .map(function (t) {
+                        return "<li>" + esc(t) + "</li>";
+                    })
+                    .join("");
+
+                var img = "";
+                if (c.photo) {
+                    img =
+                        '<img src="' +
+                        esc(c.photo) +
+                        '" alt="' +
+                        esc(c.name || "") +
+                        '" width="640" height="800" decoding="async" fetchpriority="high" />';
+                }
+
+                featureEl.innerHTML =
+                    '<article class="coach-feature-inner">' +
+                    '<div class="coach-feature-photo">' +
+                    '<span class="coach-head-badge">Главный тренер</span>' +
+                    img +
+                    "</div>" +
+                    '<div class="coach-feature-info">' +
+                    '<span class="cf-role">' +
+                    esc(c.role || "Тренер") +
+                    "</span>" +
+                    '<h3 class="cf-name">' +
+                    esc(c.name || "") +
+                    "</h3>" +
+                    (c.nickname ? '<p class="cf-nick">«' + esc(c.nickname) + "»</p>" : "") +
+                    (c.rank ? '<p class="cf-rank">' + esc(c.rank) + "</p>" : "") +
+                    '<p class="cf-desc">' +
+                    esc(c.description || "") +
+                    "</p>" +
+                    (lis ? '<ul class="cf-titles">' + lis + "</ul>" : "") +
+                    "</div>" +
+                    "</article>";
+                featureEl.removeAttribute("hidden");
+                reveal();
+            }
+
+            fetch("data/coaches.json", { credentials: "same-origin" })
+                .then(function (r) {
+                    if (!r.ok) throw new Error("coaches json");
+                    return r.json();
+                })
+                .then(function (coaches) {
+                    var list = Array.isArray(coaches) ? coaches : [];
+                    var head = pickHeadCoach(list);
+                    if (!head) {
+                        featureEl.innerHTML =
+                            '<p class="coaches-empty">Состав тренеров скоро появится в coaches.json.</p>';
+                        featureEl.removeAttribute("hidden");
+                        reveal();
+                        return;
+                    }
+                    renderCoach(head);
+                })
+                .catch(function () {
+                    featureEl.innerHTML =
+                        '<p class="coaches-empty">Не удалось загрузить coaches.json.</p>';
+                    featureEl.removeAttribute("hidden");
+                    reveal();
                 });
         })();
 
