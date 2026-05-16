@@ -282,14 +282,17 @@
             margin-bottom: 32px;
         }
 
-        .coach-feature {
+        .coaches-roster {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: clamp(22px, 3vw, 32px);
             max-width: min(1100px, 92%);
             margin: 0 auto;
             padding: 0 max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right));
             box-sizing: border-box;
         }
 
-        .coach-feature[hidden] {
+        .coaches-roster[hidden] {
             display: none !important;
         }
 
@@ -332,19 +335,27 @@
             display: block;
         }
 
-        .coach-branch-badge {
+        .coach-branch-badge,
+        .coach-head-badge {
             position: absolute;
             top: 12px;
             left: 12px;
             z-index: 2;
             font-size: 0.62rem;
             font-weight: 900;
-            letter-spacing: 0.18em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
             padding: 8px 11px;
             background: rgba(0, 0, 0, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.22);
             color: #fafafa;
+            max-width: calc(100% - 24px);
+            line-height: 1.25;
+        }
+
+        .coach-head-badge {
+            border-color: rgba(214, 0, 0, 0.65);
+            box-shadow: 0 0 18px rgba(214, 0, 0, 0.25);
         }
 
         .coach-feature-info .cf-role {
@@ -438,6 +449,10 @@
         }
 
         @media (max-width: 820px) {
+            .coaches-roster {
+                grid-template-columns: 1fr;
+            }
+
             .coach-feature-inner {
                 grid-template-columns: 1fr;
             }
@@ -2344,9 +2359,9 @@
             <div class="container">
                 <span class="section-tag reveal">Команда</span>
                 <h2 class="reveal">Тренерский состав</h2>
-                <p class="reveal coaches-lead">Тренер филиала Анапа — ударная школа мирового уровня. Остальной состав по другим городам — в разделе «Империя Кузни».</p>
+                <p class="reveal coaches-lead">Филиал Анапа: главный тренер и штатный тренер-профи. Остальные города — в «Империи Кузни».</p>
             </div>
-            <div id="coach-feature" class="coach-feature reveal" hidden aria-live="polite"></div>
+            <div id="coaches-roster" class="coaches-roster reveal" hidden aria-live="polite"></div>
             <p class="coaches-footnote reveal">Тренеры филиалов: Анапа, Краснодар, Севастополь и регион — в карточках залов.</p>
         </section>
 
@@ -2940,8 +2955,8 @@
 
         // --- Тренерский состав: data/coaches.json ---
         (function () {
-            var featureEl = document.getElementById("coach-feature");
-            if (!featureEl) return;
+            var rosterEl = document.getElementById("coaches-roster");
+            if (!rosterEl) return;
 
             function esc(s) {
                 return String(s === null || s === undefined ? "" : s)
@@ -2950,14 +2965,30 @@
                     .replace(/"/g, "&quot;");
             }
 
-            function pickHeadCoach(list) {
-                for (var i = 0; i < list.length; i++) {
-                    if (list[i].head) return list[i];
-                }
-                return list[0] || null;
+            function isHeadCoach(c) {
+                return !!(c && (c.head || c.id === "aleksandr-oganezov"));
             }
 
-            function renderCoach(c) {
+            function coachBadgeHtml(c) {
+                if (isHeadCoach(c)) {
+                    return '<span class="coach-head-badge">Главный тренер</span>';
+                }
+                return (
+                    '<span class="coach-branch-badge">' +
+                    esc(c.role || "Тренер") +
+                    "</span>"
+                );
+            }
+
+            function sortCoaches(list) {
+                return list.slice().sort(function (a, b) {
+                    var ah = isHeadCoach(a) ? 0 : 1;
+                    var bh = isHeadCoach(b) ? 0 : 1;
+                    return ah - bh;
+                });
+            }
+
+            function renderCoachCard(c) {
                 var titles = Array.isArray(c.titles) ? c.titles : [];
                 var lis = titles
                     .map(function (t) {
@@ -2972,15 +3003,13 @@
                         esc(c.photo) +
                         '" alt="' +
                         esc(c.name || "") +
-                        '" width="640" height="800" decoding="async" fetchpriority="high" />';
+                        '" width="640" height="800" loading="lazy" decoding="async" />';
                 }
 
-                featureEl.innerHTML =
+                return (
                     '<article class="coach-feature-inner">' +
                     '<div class="coach-feature-photo">' +
-                    '<span class="coach-branch-badge">' +
-                    esc(c.role || "Тренер филиала Анапа") +
-                    "</span>" +
+                    coachBadgeHtml(c) +
                     img +
                     "</div>" +
                     '<div class="coach-feature-info">' +
@@ -2994,9 +3023,8 @@
                     "</p>" +
                     (lis ? '<ul class="cf-titles">' + lis + "</ul>" : "") +
                     "</div>" +
-                    "</article>";
-                featureEl.removeAttribute("hidden");
-                reveal();
+                    "</article>"
+                );
             }
 
             fetch("data/coaches.json", { credentials: "same-origin" })
@@ -3006,20 +3034,23 @@
                 })
                 .then(function (coaches) {
                     var list = Array.isArray(coaches) ? coaches : [];
-                    var head = pickHeadCoach(list);
-                    if (!head) {
-                        featureEl.innerHTML =
+                    if (!list.length) {
+                        rosterEl.innerHTML =
                             '<p class="coaches-empty">Состав тренеров скоро появится в coaches.json.</p>';
-                        featureEl.removeAttribute("hidden");
+                        rosterEl.removeAttribute("hidden");
                         reveal();
                         return;
                     }
-                    renderCoach(head);
+                    rosterEl.innerHTML = sortCoaches(list)
+                        .map(renderCoachCard)
+                        .join("");
+                    rosterEl.removeAttribute("hidden");
+                    reveal();
                 })
                 .catch(function () {
-                    featureEl.innerHTML =
+                    rosterEl.innerHTML =
                         '<p class="coaches-empty">Не удалось загрузить coaches.json.</p>';
-                    featureEl.removeAttribute("hidden");
+                    rosterEl.removeAttribute("hidden");
                     reveal();
                 });
         })();
