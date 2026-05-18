@@ -3,6 +3,7 @@
     "id": "oleg-popov",
     "name": "Олег Попов",
     "nickname": "Двужильный",
+    "elite": true,
     "category": "Тяжелый вес (до 120 кг)",
     "record": "23-2",
     "stats": {
@@ -22,6 +23,7 @@
     "id": "sergey-romanov",
     "name": "Сергей Романов",
     "nickname": "Северный Ветер",
+    "elite": true,
     "category": "Средний вес (до 84 кг)",
     "record": "26-6",
     "stats": {
@@ -41,6 +43,7 @@
     "id": "anatoliy-moiseev",
     "name": "Анатолий Моисеев",
     "nickname": "Толя",
+    "elite": true,
     "category": "Тренер филиала Анапа / Профессиональный боец",
     "record": "МСМК",
     "titles": [
@@ -56,6 +59,7 @@
     "id": "aleksandr-oganezov",
     "name": "Александр Оганезов",
     "nickname": "Рафаэлович",
+    "elite": true,
     "category": "Главный тренер филиала Анапа",
     "record": "6-2",
     "titles": [
