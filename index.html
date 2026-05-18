@@ -259,7 +259,6 @@
             scroll-margin-top: 96px;
         }
 
-        #directions,
         #coaches,
         #champions,
         #anapa-schedule,
@@ -1730,155 +1729,6 @@
 
 
 
-        /* --- Направления: Monochrome Power + Fighter Select --- */
-        .mk-directions-wrap {
-            display: grid;
-            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-            gap: 28px;
-            align-items: start;
-        }
-
-        .mk-profile {
-            border: 1px solid #2f2f35;
-            background: linear-gradient(180deg, #0f0f11 0%, #080809 100%);
-            padding: 28px;
-            min-height: 560px;
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-            gap: 20px;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45), inset 0 0 60px rgba(255, 255, 255, 0.03);
-        }
-
-        .mk-profile-tag {
-            font-size: 0.68rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: #d4d4d8;
-            font-weight: 800;
-            transition: opacity 0.26s ease;
-        }
-
-        .mk-portrait-stage {
-            position: relative;
-            border: 1px solid #303036;
-            min-height: 300px;
-            display: grid;
-            place-items: center;
-            background: radial-gradient(circle at 50% 24%, #19191d 0%, #0a0a0d 70%);
-            overflow: hidden;
-        }
-
-        .mk-fullname {
-            font-size: clamp(1.8rem, 3.4vw, 2.8rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.22);
-            transition: opacity 0.26s ease;
-        }
-
-        .mk-bio h3 {
-            margin-bottom: 10px;
-        }
-
-        .mk-bio p {
-            color: #d1d5db;
-            margin-bottom: 14px;
-            max-width: 54ch;
-            font-size: 0.95rem;
-            transition: opacity 0.26s ease;
-        }
-
-        #fighter-name,
-        #fighter-meta {
-            transition: opacity 0.26s ease;
-        }
-
-        .mk-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .mk-chip {
-            padding: 8px 12px;
-            border: 1px solid #3f3f46;
-            background: #0a0a0b;
-            color: #f3f4f6;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-        }
-
-        .mk-grid {
-            border: 1px solid #2f2f35;
-            background: #0a0a0b;
-            padding: 18px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
-            gap: 12px;
-        }
-
-        .mk-grid.mk-grid--pair {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        @media (max-width: 520px) {
-            .mk-grid.mk-grid--pair {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .mk-fighter {
-            border: 1px solid #35353c;
-            background: #0d0d0f;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease, filter 0.28s ease;
-            filter: grayscale(1);
-        }
-
-        .mk-fighter:hover,
-        .mk-fighter.active {
-            transform: translateY(-4px) scale(1.02);
-            filter: grayscale(0.1);
-            border-color: #ffffff;
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22), 0 0 22px rgba(255, 255, 255, 0.25);
-        }
-
-        .mk-thumb {
-            aspect-ratio: 3 / 4;
-            display: grid;
-            place-items: center;
-            font-weight: 900;
-            font-size: 1.05rem;
-            letter-spacing: 0.08em;
-            color: #f9fafb;
-            background: linear-gradient(160deg, #27272a 0%, #111113 60%, #060607 100%);
-        }
-
-        .mk-name {
-            padding: 8px 8px 10px;
-            text-align: center;
-            font-size: 0.64rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #e5e7eb;
-            border-top: 1px solid #2d2d33;
-            font-weight: 800;
-        }
-
-        @media (max-width: 980px) {
-            .mk-directions-wrap {
-                grid-template-columns: 1fr;
-            }
-        }
-
-
-
         /* --- Branches Dashboard --- */
         .branches-dashboard {
             display: flex;
@@ -1945,7 +1795,7 @@
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
-            max-height: 2500px;
+            max-height: 12000px;
         }
 
         .branch-layout {
@@ -1953,6 +1803,266 @@
             grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
             gap: 18px;
             align-items: start;
+        }
+
+        .branch-anapa-stack {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(28px, 4vw, 40px);
+        }
+
+        .branch-layout--anapa-top {
+            grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
+            gap: clamp(20px, 3vw, 28px);
+        }
+
+        .empire-gyms-section {
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .empire-gyms-lead {
+            color: #71717a;
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            line-height: 1.45;
+        }
+
+        .empire-gyms-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: clamp(12px, 2vw, 18px);
+        }
+
+        .empire-gym-thumb {
+            margin: 0;
+            padding: 0;
+            border: 1px solid #35353c;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 40%, #1a1a1e 0%, #08080a 100%);
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            cursor: zoom-in;
+            font: inherit;
+            color: inherit;
+            display: block;
+            width: 100%;
+            position: relative;
+            box-sizing: border-box;
+            transition:
+                transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+        .empire-gym-thumb::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                transparent 55%,
+                rgba(0, 0, 0, 0.55) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .empire-gym-thumb:hover,
+        .empire-gym-thumb:focus-visible {
+            border-color: rgba(214, 0, 0, 0.55);
+            box-shadow:
+                0 0 0 1px rgba(214, 0, 0, 0.25),
+                0 16px 40px rgba(0, 0, 0, 0.45);
+            transform: scale(1.02);
+            outline: none;
+        }
+
+        .empire-gym-thumb:hover::after,
+        .empire-gym-thumb:focus-visible::after {
+            opacity: 1;
+        }
+
+        .empire-gym-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            display: block;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .empire-gym-thumb:hover img,
+        .empire-gym-thumb:focus-visible img {
+            transform: scale(1.05);
+        }
+
+        /* Лайтбокс зала */
+        .gym-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(16px, 4vw, 32px);
+            background: rgba(4, 4, 6, 0.92);
+            backdrop-filter: blur(10px);
+        }
+
+        .gym-lightbox.is-open {
+            display: flex;
+        }
+
+        .gym-lightbox-inner {
+            position: relative;
+            max-width: min(1100px, 96vw);
+            max-height: min(88vh, 900px);
+            width: 100%;
+            border: 1px solid #3a3a42;
+            background: linear-gradient(165deg, #141416 0%, #08080a 100%);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.06),
+                0 32px 80px rgba(0, 0, 0, 0.65);
+            padding: clamp(12px, 2vw, 18px);
+        }
+
+        .gym-lightbox-img {
+            display: block;
+            width: 100%;
+            max-height: min(82vh, 820px);
+            object-fit: contain;
+            object-position: center center;
+        }
+
+        .gym-lightbox-caption {
+            margin-top: 12px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #a1a1aa;
+            text-align: center;
+        }
+
+        .gym-lightbox-close,
+        .gym-lightbox-nav {
+            position: absolute;
+            font-family: var(--font-main);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.75);
+            color: #fafafa;
+            cursor: pointer;
+            transition: border-color 0.25s, background 0.25s, color 0.25s;
+        }
+
+        .gym-lightbox-close {
+            top: clamp(12px, 3vw, 24px);
+            right: clamp(12px, 3vw, 24px);
+            width: 44px;
+            height: 44px;
+            font-size: 1.5rem;
+            line-height: 1;
+            z-index: 3;
+        }
+
+        .gym-lightbox-nav {
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            font-size: 1.6rem;
+            font-weight: 900;
+            z-index: 2;
+        }
+
+        .gym-lightbox-prev {
+            left: clamp(8px, 2vw, 20px);
+        }
+
+        .gym-lightbox-next {
+            right: clamp(8px, 2vw, 20px);
+        }
+
+        .gym-lightbox-close:hover,
+        .gym-lightbox-nav:hover {
+            border-color: rgba(214, 0, 0, 0.65);
+            background: rgba(214, 0, 0, 0.2);
+        }
+
+        .gym-lightbox-backdrop {
+            position: absolute;
+            inset: 0;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .empire-coaches-section {
+            border: 1px solid #2f3540;
+            background: linear-gradient(180deg, #0c0c0e 0%, #060607 100%);
+            padding: clamp(22px, 3vw, 32px);
+        }
+
+        .empire-coaches-section .sub-title {
+            margin-bottom: 18px;
+        }
+
+        .empire-coaches-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: clamp(22px, 3vw, 32px);
+            align-items: start;
+        }
+
+        .empire-schedule-aside {
+            border: 1px solid #2f3540;
+            background: #0b0f14;
+            padding: clamp(20px, 3vw, 26px);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        @media (max-width: 1024px) {
+            .branch-layout--anapa-top {
+                grid-template-columns: 1fr;
+            }
+
+            .empire-coaches-grid {
+                grid-template-columns: 1fr;
+                max-width: min(640px, 100%);
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .empire-gyms-gallery {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 14px;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .empire-gyms-gallery::-webkit-scrollbar {
+                height: 5px;
+            }
+
+            .empire-gyms-gallery::-webkit-scrollbar-thumb {
+                background: #333;
+                border-radius: 3px;
+            }
+
+            .empire-gym-thumb {
+                flex: 0 0 min(85%, 340px);
+                scroll-snap-align: center;
+            }
         }
 
         .hall-card {
@@ -2492,7 +2602,6 @@
             </a>
             <nav class="nav-links">
                 <a href="#about">О нас</a>
-                <a href="#directions">Направления</a>
                 <a href="#coaches">Тренеры</a>
                 <a href="#champions">Чемпионы</a>
                 <a href="#anapa-schedule">Расписание</a>
@@ -2523,7 +2632,7 @@
                 <p class="reveal">Профессиональная подготовка бойцов ММА, Бокса и BJJ в самом сердце Анапы. Переходи на новый уровень вместе с «Кузней».</p>
                 <div class="btn-group reveal">
                     <a href="shop.html" class="btn btn-red">ПЕРЕЙТИ В МАГАЗИН!</a>
-                    <a href="#directions" class="btn btn-outline">ВЫБРАТЬ НАПРАВЛЕНИЕ</a>
+                    <a href="#empire-kuznya" class="btn btn-outline">ВЫБРАТЬ НАПРАВЛЕНИЕ</a>
                 </div>
             </div>
         </section>
@@ -2580,28 +2689,46 @@
                     </div>
 
                     <div class="branch-panel active" data-branch-panel="anapa">
-                        <div class="branch-layout">
-                            <article class="hall-card">
-                                <div class="hall-photo">Фото зала</div>
-                                <div class="hall-title">Зал Анапа</div>
-                                <div class="hall-addr">ул. Шевченко 24</div>
-                                <div class="addr-actions">
-                                    <a class="btn btn-outline btn-sm" href="https://yandex.ru/maps/?text=%D0%90%D0%BD%D0%B0%D0%BF%D0%B0%20%D1%83%D0%BB%20%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE%2024" target="_blank" rel="noopener noreferrer">Маршрут</a>
-                                    <a class="btn btn-red btn-sm" href="tel:+79615210005">Позвонить</a>
-                                </div>
-                            </article>
-                            <article class="trainers-board">
+                        <div class="branch-anapa-stack">
+                            <div class="branch-layout branch-layout--anapa-top">
+                                <article class="hall-card">
+                                    <div class="sub-title">Филиал · Анапа</div>
+                                    <div class="hall-title">Зал «Кузня» · Шевченко, 24</div>
+                                    <div class="hall-addr">г. Анапа, ул. Шевченко, д. 24</div>
+                                    <div class="addr-actions">
+                                        <a class="btn btn-outline btn-sm" href="https://yandex.ru/maps/?text=%D0%90%D0%BD%D0%B0%D0%BF%D0%B0%20%D1%83%D0%BB%20%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE%2024" target="_blank" rel="noopener noreferrer">Маршрут</a>
+                                        <a class="btn btn-red btn-sm" href="tel:+79180620909">Позвонить</a>
+                                    </div>
+                                    <section class="empire-gyms-section" aria-label="Наш зал · Анапа">
+                                        <div class="sub-title">Наш зал</div>
+                                        <p class="empire-gyms-lead">Шевченко, 24 — бетон, ринг, зона силы. Нажми на кадр, чтобы увеличить.</p>
+                                        <div class="empire-gyms-gallery" id="anapa-gym-gallery">
+                                            <button type="button" class="empire-gym-thumb" data-gym-src="images/gym_photos/anapa_1.png" data-gym-caption="Зал «Кузня» Анапа · 1" aria-label="Увеличить: зал, вид 1">
+                                                <img src="images/gym_photos/anapa_1.png" alt="Зал Кузня Анапа — вид 1" width="1200" height="900" loading="lazy" decoding="async" />
+                                            </button>
+                                            <button type="button" class="empire-gym-thumb" data-gym-src="images/gym_photos/anapa_2.png" data-gym-caption="Зал «Кузня» Анапа · 2" aria-label="Увеличить: зал, вид 2">
+                                                <img src="images/gym_photos/anapa_2.png" alt="Зал Кузня Анапа — вид 2" width="1200" height="900" loading="lazy" decoding="async" />
+                                            </button>
+                                            <button type="button" class="empire-gym-thumb" data-gym-src="images/gym_photos/anapa_3.png" data-gym-caption="Зал «Кузня» Анапа · 3" aria-label="Увеличить: зал, вид 3">
+                                                <img src="images/gym_photos/anapa_3.png" alt="Зал Кузня Анапа — вид 3" width="1200" height="900" loading="lazy" decoding="async" />
+                                            </button>
+                                        </div>
+                                    </section>
+                                </article>
+                                <aside class="empire-schedule-aside">
+                                    <div class="sub-title">Расписание</div>
+                                    <p style="color: var(--muted); font-weight: 700; line-height: 1.5;">Группы ММА, детские потоки и ОФП — полный прайс и слоты на странице ниже.</p>
+                                    <a class="btn btn-outline" href="#anapa-schedule">Расписание и цены</a>
+                                    <a class="btn btn-red" href="tel:+79180620909">Записаться · 8-918-062-09-09</a>
+                                    <a class="btn btn-outline btn-sm" href="#coaches" style="margin-top: 4px;">Все тренеры зала</a>
+                                </aside>
+                            </div>
+                            <section class="empire-coaches-section" aria-label="Тренеры филиала Анапа">
                                 <div class="sub-title">Тренеры филиала</div>
-                                <div class="trainer-grid">
-                                    <div class="trainer-card"><div class="trainer-avatar">ОП</div><div class="trainer-name">Олег Перевертунов</div></div>
-                                    <div class="trainer-card"><div class="trainer-avatar">АН</div><div class="trainer-name">Алексей Невский</div></div>
-                                    <div class="trainer-card"><div class="trainer-avatar">МР</div><div class="trainer-name">Михаил Ринг</div></div>
+                                <div id="empire-anapa-coaches" class="empire-coaches-grid" aria-live="polite">
+                                    <p class="coaches-empty" style="grid-column: 1 / -1;">Загрузка состава…</p>
                                 </div>
-                                <div class="sub-title">Расписание</div>
-                                <p style="color: var(--muted); font-weight: 700; margin-bottom: 14px;">Актуальные группы ММА, детские потоки и ОФП — в блоке ниже по странице.</p>
-                                <a class="btn btn-outline" href="#anapa-schedule">Расписание и цены</a>
-                                <a class="btn btn-red" href="tel:+79180620909" style="margin-top: 10px;">Записаться · 8-918-062-09-09</a>
-                            </article>
+                            </section>
                         </div>
                     </div>
 
@@ -2683,31 +2810,6 @@
             </div>
         </section>
 
-        <section id="directions">
-            <div class="container">
-                <span class="section-tag reveal">Направления</span>
-                <h2 class="reveal">Выбор бойцов</h2>
-                <div class="mk-directions-wrap reveal">
-                    <article class="mk-profile" id="fighter-profile">
-                        <span class="mk-profile-tag" id="fighter-division">Тяжёлый вес (до 120 кг)</span>
-                        <div class="mk-portrait-stage">
-                            <div class="mk-fullname" id="fighter-stage-name">ОЛЕГ ПОПОВ</div>
-                        </div>
-                        <div class="mk-bio">
-                            <h3 id="fighter-name">Олег Попов</h3>
-                            <p id="fighter-achievements">Действующий чемпион PFL, представляющий клуб «Кузня» на мировой арене.</p>
-                            <div class="mk-meta" id="fighter-meta">
-                                <span class="mk-chip">Рекорд 23-2</span>
-                                <span class="mk-chip">«Двужильный»</span>
-                                <span class="mk-chip">Чемпион PFL в тяжёлом весе (2025)</span>
-                            </div>
-                        </div>
-                    </article>
-                    <div class="mk-grid mk-grid--pair" id="mk-fighter-grid" role="listbox" aria-label="Выбор бойца"></div>
-                </div>
-            </div>
-        </section>
-
         <section id="coaches">
             <div class="container">
                 <span class="section-tag reveal">Зал · Анапа</span>
@@ -2781,6 +2883,17 @@
             </div>
         </section>
     </main>
+
+    <div id="gym-lightbox" class="gym-lightbox" role="dialog" aria-modal="true" aria-label="Фото зала" hidden>
+        <button type="button" class="gym-lightbox-backdrop" aria-label="Закрыть"></button>
+        <button type="button" class="gym-lightbox-close" aria-label="Закрыть">×</button>
+        <button type="button" class="gym-lightbox-nav gym-lightbox-prev" aria-label="Предыдущее фото">‹</button>
+        <button type="button" class="gym-lightbox-nav gym-lightbox-next" aria-label="Следующее фото">›</button>
+        <div class="gym-lightbox-inner">
+            <img class="gym-lightbox-img" src="" alt="" />
+            <p class="gym-lightbox-caption" id="gym-lightbox-caption"></p>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
@@ -2896,18 +3009,11 @@
         window.addEventListener("scroll", reveal);
         reveal(); // Запуск при загрузке
 
-        // --- Бойцы: карусель чемпионов + «Выбор бойцов» (один запрос data/fighters.json) ---
+        // --- Бойцы: карусель чемпионов (data/fighters.json) ---
         (function () {
             var detailEl = document.getElementById("champions-detail");
             var carouselEl = document.getElementById("champions-carousel");
             var trackEl = document.getElementById("champions-track");
-            var mkGrid = document.getElementById("mk-fighter-grid");
-            var divEl = document.getElementById("fighter-division");
-            var stageEl = document.getElementById("fighter-stage-name");
-            var nameEl = document.getElementById("fighter-name");
-            var achEl = document.getElementById("fighter-achievements");
-            var metaEl = document.getElementById("fighter-meta");
-
             var fightersList = [];
             var selectedId = "";
             var scrollRaf = 0;
@@ -2922,48 +3028,11 @@
                     .replace(/"/g, "&quot;");
             }
 
-            function initials(fullName) {
-                var parts = String(fullName || "")
-                    .trim()
-                    .split(/\s+/)
-                    .filter(Boolean);
-                if (parts.length >= 2) {
-                    return (
-                        parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
-                    ).toUpperCase();
-                }
-                return String(fullName || "БЦ")
-                    .slice(0, 2)
-                    .toUpperCase();
-            }
-
             function fighterById(id) {
                 for (var i = 0; i < fightersList.length; i++) {
                     if ((fightersList[i].id || "") === id) return fightersList[i];
                 }
                 return null;
-            }
-
-            function applyMkProfile(f) {
-                if (!f || !divEl || !stageEl || !nameEl || !achEl || !metaEl) return;
-                divEl.textContent = f.category || "MMA";
-                stageEl.textContent = String(f.name || "").toUpperCase();
-                nameEl.textContent = f.name || "";
-                achEl.textContent = f.description || "";
-
-                var chips = [];
-                if (f.record) chips.push("Рекорд " + f.record);
-                if (f.nickname) chips.push("«" + f.nickname + "»");
-                var titles = Array.isArray(f.titles) ? f.titles : [];
-                titles.slice(0, 2).forEach(function (t) {
-                    chips.push(t.length > 44 ? t.slice(0, 42) + "…" : t);
-                });
-
-                metaEl.innerHTML = chips
-                    .map(function (c) {
-                        return '<span class="mk-chip">' + esc(c) + "</span>";
-                    })
-                    .join("");
             }
 
             function renderDetailPanel(f) {
@@ -3039,17 +3108,6 @@
                 }
             }
 
-            function updateMkActive(id) {
-                if (!mkGrid) return;
-                var nodes = mkGrid.querySelectorAll(".mk-fighter");
-                for (var i = 0; i < nodes.length; i++) {
-                    var nid = nodes[i].getAttribute("data-fighter-id") || "";
-                    var on = nid === id;
-                    nodes[i].classList.toggle("active", on);
-                    nodes[i].setAttribute("aria-selected", on ? "true" : "false");
-                }
-            }
-
             function scrollStripToId(id) {
                 if (!carouselEl || !trackEl || !id) return;
                 var nodes = trackEl.querySelectorAll(".champion-strip-card");
@@ -3075,10 +3133,6 @@
                 selectedId = id;
                 renderDetailPanel(f);
                 updateStripActive(id);
-                if (opts.syncMk !== false) {
-                    updateMkActive(id);
-                    applyMkProfile(f);
-                }
                 if (opts.scrollCarousel) scrollStripToId(id);
             }
 
@@ -3099,43 +3153,7 @@
                     }
                 }
                 if (!bestId || bestId === selectedId) return;
-                selectFighter(bestId, { syncMk: true, scrollCarousel: false });
-            }
-
-            function setupMkDirections(fighters) {
-                if (!mkGrid || !fighters.length) return;
-
-                mkGrid.innerHTML = fighters
-                    .map(function (f, idx) {
-                        var active = idx === 0 ? " active" : "";
-                        var sel = idx === 0 ? "true" : "false";
-                        return (
-                            '<button type="button" class="mk-fighter' +
-                            active +
-                            '" data-fighter-id="' +
-                            esc(f.id || "") +
-                            '" aria-selected="' +
-                            sel +
-                            '" role="option">' +
-                            '<span class="mk-thumb">' +
-                            esc(initials(f.name)) +
-                            "</span>" +
-                            '<span class="mk-name">' +
-                            esc(f.name || "") +
-                            "</span>" +
-                            "</button>"
-                        );
-                    })
-                    .join("");
-
-                mkGrid.classList.toggle("mk-grid--pair", fighters.length <= 2);
-
-                mkGrid.addEventListener("click", function (e) {
-                    var btn = e.target.closest(".mk-fighter");
-                    if (!btn || !mkGrid.contains(btn)) return;
-                    var fid = btn.getAttribute("data-fighter-id") || "";
-                    if (fid) selectFighter(fid, { syncMk: true, scrollCarousel: true });
-                });
+                selectFighter(bestId, { scrollCarousel: false });
             }
 
             function renderStrip(fighters) {
@@ -3189,7 +3207,7 @@
                     if (!btn || !trackEl.contains(btn)) return;
                     var fid = btn.getAttribute("data-fighter-id") || "";
                     if (fid)
-                        selectFighter(fid, { syncMk: true, scrollCarousel: true });
+                        selectFighter(fid, { scrollCarousel: true });
                 });
 
                 if (carouselEl) {
@@ -3223,10 +3241,7 @@
                                 ? Math.min(ids.length - 1, ix + 1)
                                 : Math.max(0, ix - 1);
                         if (nx !== ix && ids[nx])
-                            selectFighter(ids[nx], {
-                                syncMk: true,
-                                scrollCarousel: true,
-                            });
+                            selectFighter(ids[nx], { scrollCarousel: true });
                     });
                 }
             }
@@ -3258,19 +3273,14 @@
                         emptyState(
                             "Элита готовится — в fighters.json отметь elite: true у чемпионов с поясами."
                         );
-                        setupMkDirections([]);
                         return;
                     }
 
-                    setupMkDirections(fightersList);
                     renderStrip(fightersList);
                     setupCarouselInteractions();
 
                     selectedId = fightersList[0].id || "";
-                    selectFighter(selectedId, {
-                        syncMk: true,
-                        scrollCarousel: false,
-                    });
+                    selectFighter(selectedId, { scrollCarousel: false });
 
                     requestAnimationFrame(function () {
                         syncActiveFromCarouselScroll();
@@ -3288,7 +3298,8 @@
         // --- Тренерский состав: data/coaches.json ---
         (function () {
             var rosterEl = document.getElementById("coaches-roster");
-            if (!rosterEl) return;
+            var empireAnapaEl = document.getElementById("empire-anapa-coaches");
+            if (!rosterEl && !empireAnapaEl) return;
 
             function esc(s) {
                 return String(s === null || s === undefined ? "" : s)
@@ -3303,7 +3314,11 @@
 
             function coachBadgeHtml(c) {
                 if (isHeadCoach(c)) {
-                    return '<span class="coach-head-badge">Главный тренер</span>';
+                    return (
+                        '<span class="coach-head-badge">' +
+                        esc(c.role || "Главный тренер") +
+                        "</span>"
+                    );
                 }
                 return (
                     '<span class="coach-branch-badge">' +
@@ -3374,23 +3389,38 @@
                             );
                         }
                     );
+                    function mountCoaches(html) {
+                        if (rosterEl) {
+                            rosterEl.innerHTML = html;
+                            rosterEl.removeAttribute("hidden");
+                        }
+                        if (empireAnapaEl) {
+                            empireAnapaEl.innerHTML = html;
+                        }
+                    }
+
                     if (!list.length) {
-                        rosterEl.innerHTML =
-                            '<p class="coaches-empty">Состав тренеров скоро появится в coaches.json.</p>';
-                        rosterEl.removeAttribute("hidden");
+                        mountCoaches(
+                            '<p class="coaches-empty">Состав тренеров скоро появится в coaches.json.</p>'
+                        );
                         reveal();
                         return;
                     }
-                    rosterEl.innerHTML = sortCoaches(list)
-                        .map(renderCoachCard)
-                        .join("");
-                    rosterEl.removeAttribute("hidden");
+                    mountCoaches(
+                        sortCoaches(list).map(renderCoachCard).join("")
+                    );
                     reveal();
                 })
                 .catch(function () {
-                    rosterEl.innerHTML =
+                    var err =
                         '<p class="coaches-empty">Не удалось загрузить coaches.json.</p>';
-                    rosterEl.removeAttribute("hidden");
+                    if (rosterEl) {
+                        rosterEl.innerHTML = err;
+                        rosterEl.removeAttribute("hidden");
+                    }
+                    if (empireAnapaEl) {
+                        empireAnapaEl.innerHTML = err;
+                    }
                     reveal();
                 });
         })();
@@ -3618,6 +3648,87 @@
                         "Не удалось загрузить data/schedule_anapa.json — проверь путь после деплоя."
                     );
                 });
+        })();
+
+        // --- Галерея зала Анапа (лайтбокс) ---
+        (function () {
+            var gallery = document.getElementById("anapa-gym-gallery");
+            var box = document.getElementById("gym-lightbox");
+            if (!gallery || !box) return;
+
+            var imgEl = box.querySelector(".gym-lightbox-img");
+            var capEl = document.getElementById("gym-lightbox-caption");
+            var thumbs = gallery.querySelectorAll(".empire-gym-thumb");
+            var slides = [];
+            var index = 0;
+            var lastFocus = null;
+
+            thumbs.forEach(function (btn, i) {
+                var thumbImg = btn.querySelector("img");
+                slides.push({
+                    src: btn.getAttribute("data-gym-src") || "",
+                    caption: btn.getAttribute("data-gym-caption") || "",
+                    alt: (thumbImg && thumbImg.getAttribute("alt")) || "",
+                });
+                btn.addEventListener("click", function () {
+                    openAt(i);
+                });
+            });
+
+            function render() {
+                var s = slides[index];
+                if (!s || !imgEl) return;
+                imgEl.src = s.src;
+                imgEl.alt = s.alt;
+                if (capEl) capEl.textContent = s.caption;
+            }
+
+            function openAt(i) {
+                if (!slides.length) return;
+                index = ((i % slides.length) + slides.length) % slides.length;
+                lastFocus = document.activeElement;
+                render();
+                box.removeAttribute("hidden");
+                requestAnimationFrame(function () {
+                    box.classList.add("is-open");
+                });
+                document.body.style.overflow = "hidden";
+                var closeBtn = box.querySelector(".gym-lightbox-close");
+                if (closeBtn) closeBtn.focus();
+            }
+
+            function close() {
+                box.classList.remove("is-open");
+                document.body.style.overflow = "";
+                setTimeout(function () {
+                    if (!box.classList.contains("is-open")) {
+                        box.setAttribute("hidden", "");
+                        if (imgEl) imgEl.removeAttribute("src");
+                    }
+                }, 320);
+                if (lastFocus && lastFocus.focus) lastFocus.focus();
+            }
+
+            function step(dir) {
+                openAt(index + dir);
+            }
+
+            var closeBtn = box.querySelector(".gym-lightbox-close");
+            var backdrop = box.querySelector(".gym-lightbox-backdrop");
+            var prevBtn = box.querySelector(".gym-lightbox-prev");
+            var nextBtn = box.querySelector(".gym-lightbox-next");
+
+            if (closeBtn) closeBtn.addEventListener("click", close);
+            if (backdrop) backdrop.addEventListener("click", close);
+            if (prevBtn) prevBtn.addEventListener("click", function () { step(-1); });
+            if (nextBtn) nextBtn.addEventListener("click", function () { step(1); });
+
+            document.addEventListener("keydown", function (e) {
+                if (!box.classList.contains("is-open")) return;
+                if (e.key === "Escape") close();
+                if (e.key === "ArrowLeft") step(-1);
+                if (e.key === "ArrowRight") step(1);
+            });
         })();
 
         // --- Branch Dashboard tabs ---
