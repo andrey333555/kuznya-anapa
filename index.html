@@ -259,41 +259,10 @@
             scroll-margin-top: 96px;
         }
 
-        #coaches,
         #champions,
         #anapa-schedule,
         #contacts {
             scroll-margin-top: 96px;
-        }
-
-        #coaches {
-            padding: 88px 0 96px;
-            background:
-                radial-gradient(ellipse 85% 42% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 58%),
-                var(--bg);
-            border-bottom: 1px solid var(--line);
-        }
-
-        #coaches .coaches-lead {
-            color: var(--muted);
-            font-weight: 700;
-            max-width: 560px;
-            margin-bottom: 32px;
-        }
-
-        .coaches-roster {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: clamp(24px, 3.5vw, 40px);
-            max-width: min(1440px, 96%);
-            margin: 0 auto;
-            padding: 0 max(20px, env(safe-area-inset-left)) 0 max(20px, env(safe-area-inset-right));
-            box-sizing: border-box;
-            align-items: stretch;
-        }
-
-        .coaches-roster[hidden] {
-            display: none !important;
         }
 
         .coach-feature-inner {
@@ -491,38 +460,9 @@
             margin: 0 auto;
         }
 
-        .coaches-footnote {
-            max-width: min(1100px, 92%);
-            margin: 20px auto 0;
-            padding: 0 max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right));
-            color: #71717a;
-            font-size: 0.82rem;
-            font-weight: 700;
-        }
-
         @media (max-width: 720px) {
-            .coaches-roster,
-            .coaches-roster--hall {
-                grid-template-columns: 1fr;
-                max-width: min(640px, 94%);
-            }
-
             .coach-feature-photo {
                 min-height: clamp(300px, 75vw, 440px);
-            }
-        }
-
-        @media (min-width: 721px) and (max-width: 1100px) {
-            .coaches-roster,
-            .coaches-roster--hall {
-                grid-template-columns: 1fr;
-                max-width: min(720px, 94%);
-            }
-        }
-
-        @media (min-width: 1101px) {
-            .coaches-roster--hall {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
@@ -2402,11 +2342,6 @@
                 padding-bottom: 64px;
             }
 
-            #coaches {
-                padding-top: 40px;
-                padding-bottom: 48px;
-            }
-
             #champions {
                 padding-top: 44px;
                 padding-bottom: 52px;
@@ -2602,7 +2537,6 @@
             </a>
             <nav class="nav-links">
                 <a href="#about">О нас</a>
-                <a href="#coaches">Тренеры</a>
                 <a href="#champions">Чемпионы</a>
                 <a href="#anapa-schedule">Расписание</a>
                 <a href="#empire-kuznya">Филиалы</a>
@@ -2720,7 +2654,6 @@
                                     <p style="color: var(--muted); font-weight: 700; line-height: 1.5;">Группы ММА, детские потоки и ОФП — полный прайс и слоты на странице ниже.</p>
                                     <a class="btn btn-outline" href="#anapa-schedule">Расписание и цены</a>
                                     <a class="btn btn-red" href="tel:+79180620909">Записаться · 8-918-062-09-09</a>
-                                    <a class="btn btn-outline btn-sm" href="#coaches" style="margin-top: 4px;">Все тренеры зала</a>
                                 </aside>
                             </div>
                             <section class="empire-coaches-section" aria-label="Тренеры филиала Анапа">
@@ -2808,15 +2741,6 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section id="coaches">
-            <div class="container">
-                <span class="section-tag reveal">Зал · Анапа</span>
-                <h2 class="reveal">Тренеры и бойцы зала Анапа</h2>
-                <p class="reveal coaches-lead">Кто ведёт группы на Шевченко, 24: главный тренер, штат и потоки по расписанию. Элита сети — отдельным блоком ниже.</p>
-            </div>
-            <div id="coaches-roster" class="coaches-roster coaches-roster--hall reveal" hidden aria-live="polite"></div>
         </section>
 
         <section id="champions">
@@ -3297,9 +3221,8 @@
 
         // --- Тренерский состав: data/coaches.json ---
         (function () {
-            var rosterEl = document.getElementById("coaches-roster");
             var empireAnapaEl = document.getElementById("empire-anapa-coaches");
-            if (!rosterEl && !empireAnapaEl) return;
+            if (!empireAnapaEl) return;
 
             function esc(s) {
                 return String(s === null || s === undefined ? "" : s)
@@ -3390,13 +3313,7 @@
                         }
                     );
                     function mountCoaches(html) {
-                        if (rosterEl) {
-                            rosterEl.innerHTML = html;
-                            rosterEl.removeAttribute("hidden");
-                        }
-                        if (empireAnapaEl) {
-                            empireAnapaEl.innerHTML = html;
-                        }
+                        empireAnapaEl.innerHTML = html;
                     }
 
                     if (!list.length) {
@@ -3414,13 +3331,7 @@
                 .catch(function () {
                     var err =
                         '<p class="coaches-empty">Не удалось загрузить coaches.json.</p>';
-                    if (rosterEl) {
-                        rosterEl.innerHTML = err;
-                        rosterEl.removeAttribute("hidden");
-                    }
-                    if (empireAnapaEl) {
-                        empireAnapaEl.innerHTML = err;
-                    }
+                    empireAnapaEl.innerHTML = err;
                     reveal();
                 });
         })();
