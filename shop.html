@@ -152,12 +152,17 @@
 
         .shop-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: clamp(22px, 2.8vw, 32px);
+            align-items: stretch;
             perspective: 1000px;
         }
 
         .shop-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 0;
             background: linear-gradient(180deg, #171d26 0%, #0f141b 100%);
             border: 1px solid var(--line);
             overflow: hidden;
@@ -173,35 +178,53 @@
 
         .shop-media {
             position: relative;
-            aspect-ratio: 4 / 3;
+            flex: 0 0 auto;
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            min-height: clamp(300px, 42vw, 400px);
             overflow: hidden;
+            background:
+                radial-gradient(ellipse 80% 55% at 50% 18%, #1c222c 0%, #0a0d12 100%);
         }
 
         .shop-media img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: top center;
             display: block;
             transform: scale(1.001);
+            transform-origin: top center;
             transition: transform 0.45s ease;
         }
 
-        .shop-card:hover .shop-media img { transform: scale(1.05); }
+        .shop-card:hover .shop-media img {
+            transform: scale(1.04);
+        }
 
-        .shop-body { padding: 18px; }
+        .shop-body {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            padding: clamp(20px, 2.5vw, 26px);
+            min-height: 0;
+        }
+
         .shop-name {
             font-size: 0.92rem;
             font-weight: 900;
             line-height: 1.35;
             text-transform: uppercase;
-            margin-bottom: 8px;
-            min-height: 48px;
+            margin-bottom: 10px;
+            min-height: 2.7em;
         }
+
         .shop-desc {
             color: var(--muted);
             font-size: 0.84rem;
-            min-height: 62px;
-            margin-bottom: 12px;
+            line-height: 1.5;
+            flex: 1 1 auto;
+            margin-bottom: 16px;
         }
 
         .shop-meta {
@@ -209,7 +232,14 @@
             justify-content: space-between;
             align-items: center;
             gap: 12px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
+            flex-shrink: 0;
+        }
+
+        .shop-body .btn {
+            width: 100%;
+            margin-top: auto;
+            flex-shrink: 0;
         }
 
         .shop-price { font-size: 1.1rem; font-weight: 900; color: #fff; }
@@ -251,20 +281,224 @@
             box-shadow: 0 16px 38px rgba(214,0,0,0.6);
         }
 
+        /* --- Заказ формы: один менеджер --- */
+        .shop-order-hub {
+            margin-top: clamp(36px, 5vw, 52px);
+            margin-bottom: clamp(28px, 4vw, 40px);
+            border: 1px solid #2f3540;
+            background:
+                linear-gradient(165deg, #12161c 0%, #080a0e 55%, #0c0e12 100%);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.04),
+                0 24px 48px rgba(0, 0, 0, 0.45);
+            padding: clamp(24px, 3.5vw, 36px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shop-order-hub::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--red), transparent);
+            box-shadow: 0 0 20px rgba(214, 0, 0, 0.45);
+        }
+
+        .shop-order-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: clamp(20px, 3vw, 32px);
+            align-items: center;
+        }
+
+        .shop-order-kicker {
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #a1a1aa;
+            margin-bottom: 8px;
+        }
+
+        .shop-order-title {
+            font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+
+        .shop-order-name {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--red-bright);
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+        }
+
+        .shop-order-lead {
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 600;
+            line-height: 1.5;
+            max-width: 42ch;
+        }
+
+        .shop-order-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: min(100%, 220px);
+        }
+
+        .shop-order-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font-main);
+            font-weight: 900;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 16px 22px;
+            border: 1px solid #3a424f;
+            background: #0a0a0c;
+            color: #fafafa;
+            transition:
+                border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                background 0.3s ease,
+                transform 0.25s ease;
+        }
+
+        .shop-order-btn:hover,
+        .shop-order-btn:focus-visible {
+            border-color: rgba(214, 0, 0, 0.75);
+            box-shadow: 0 0 28px rgba(214, 0, 0, 0.28);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        .shop-order-btn--tg {
+            flex-direction: column;
+            gap: 4px;
+            background: linear-gradient(180deg, rgba(214, 0, 0, 0.22) 0%, rgba(214, 0, 0, 0.06) 100%);
+            border-color: rgba(214, 0, 0, 0.55);
+            font-size: 0.78rem;
+            padding: 18px 24px;
+        }
+
+        .shop-order-btn--call {
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+
+        .shop-order-handle {
+            display: block;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            color: #d4d4d8;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .hero-order {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+
+        .hero-order .shop-order-btn {
+            min-width: 200px;
+        }
+
         .shop-links {
-            margin-top: 30px;
+            margin-top: 0;
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
+            align-items: flex-end;
             justify-content: space-between;
-            gap: 14px;
+            gap: 20px;
             border: 1px solid var(--line);
             background: rgba(255,255,255,0.03);
             padding: 22px;
         }
 
-        .shop-links p { color: var(--muted); }
-        .socials { display: flex; gap: 10px; flex-wrap: wrap; }
+        .shop-links-label {
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #71717a;
+            margin-bottom: 10px;
+        }
+
+        .shop-links p { color: var(--muted); max-width: 36ch; font-size: 0.84rem; margin: 0; }
+
+        .social-loft-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: stretch;
+        }
+
+        .social-loft-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-main);
+            font-weight: 900;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #f4f4f5;
+            background: #0a0a0c;
+            border: 1px solid #3a424f;
+            padding: 14px 20px;
+            min-width: min(100%, 140px);
+            flex: 1 1 auto;
+            transition:
+                border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                color 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .social-loft-btn:hover,
+        .social-loft-btn:focus-visible {
+            border-color: rgba(214, 0, 0, 0.8);
+            box-shadow:
+                0 0 0 1px rgba(214, 0, 0, 0.35),
+                0 0 28px rgba(214, 0, 0, 0.32);
+            color: #fff;
+            outline: none;
+        }
+
+        .social-loft-btn--vk {
+            flex: 1 1 100%;
+            border-color: rgba(255, 255, 255, 0.32);
+            background: linear-gradient(180deg, #161a22 0%, #0a0c10 100%);
+            padding: 16px 24px;
+            font-size: 0.82rem;
+            letter-spacing: 0.16em;
+        }
+
+        .social-loft-btn--vk:hover,
+        .social-loft-btn--vk:focus-visible {
+            border-color: rgba(255, 255, 255, 0.55);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                0 0 32px rgba(214, 0, 0, 0.28);
+        }
 
         .fade-up {
             opacity: 0;
@@ -276,17 +510,311 @@
             transform: translateY(0);
         }
 
+        /* --- Кодекс клубной формы (Cyber-Loft) --- */
+        .uniform-codex {
+            margin-bottom: clamp(40px, 6vw, 64px);
+        }
+
+        .codex-panel {
+            position: relative;
+            border: 1px solid #2f3540;
+            background:
+                linear-gradient(165deg, #0e1014 0%, #060708 42%, #0a0b0e 100%),
+                repeating-linear-gradient(
+                    -14deg,
+                    transparent,
+                    transparent 12px,
+                    rgba(255, 255, 255, 0.012) 12px,
+                    rgba(255, 255, 255, 0.012) 13px
+                );
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.04),
+                0 32px 64px rgba(0, 0, 0, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            padding: clamp(28px, 4vw, 48px);
+            overflow: hidden;
+        }
+
+        .codex-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--red) 20%,
+                #ff4d4d 50%,
+                var(--red) 80%,
+                transparent
+            );
+            box-shadow: 0 0 28px rgba(214, 0, 0, 0.55);
+        }
+
+        .codex-panel::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 45% at 100% 0%, rgba(214, 0, 0, 0.08), transparent 55%);
+            pointer-events: none;
+        }
+
+        .codex-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .codex-kicker {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #a1a1aa;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .codex-title {
+            font-size: clamp(1.35rem, 3.8vw, 2.35rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1.12;
+            margin-bottom: 22px;
+            max-width: 22ch;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.06);
+        }
+
+        .codex-title span {
+            display: block;
+            color: #f4f4f5;
+        }
+
+        .codex-title em {
+            font-style: normal;
+            color: var(--red-bright);
+            text-shadow: 0 0 24px rgba(255, 38, 38, 0.35);
+        }
+
+        .codex-intro {
+            color: #d4d4d8;
+            font-size: clamp(0.92rem, 1.6vw, 1.02rem);
+            font-weight: 600;
+            line-height: 1.65;
+            max-width: 72ch;
+            margin-bottom: clamp(24px, 3vw, 32px);
+            padding-left: 16px;
+            border-left: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .codex-forbidden {
+            margin-bottom: clamp(24px, 3vw, 32px);
+            padding: clamp(20px, 3vw, 28px);
+            border: 1px solid rgba(214, 0, 0, 0.55);
+            background:
+                linear-gradient(180deg, rgba(214, 0, 0, 0.14) 0%, rgba(214, 0, 0, 0.04) 100%),
+                #0a0809;
+            box-shadow:
+                0 0 0 1px rgba(214, 0, 0, 0.2),
+                0 0 48px rgba(214, 0, 0, 0.12),
+                inset 0 0 60px rgba(214, 0, 0, 0.06);
+        }
+
+        .codex-forbidden-title {
+            font-size: clamp(0.78rem, 2vw, 0.92rem);
+            font-weight: 900;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--red-bright);
+            margin-bottom: 16px;
+            text-shadow: 0 0 20px rgba(255, 38, 38, 0.4);
+        }
+
+        .codex-forbidden-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .codex-forbidden-list li {
+            position: relative;
+            padding-left: 22px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #fafafa;
+            line-height: 1.5;
+        }
+
+        .codex-forbidden-list li::before {
+            content: "−";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--red-bright);
+            font-weight: 900;
+            font-size: 1.1rem;
+            line-height: 1.35;
+            text-shadow: 0 0 12px rgba(255, 38, 38, 0.75);
+        }
+
+        .codex-rules {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .codex-rule {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #d4d4d8;
+            line-height: 1.6;
+            padding-left: 2.2em;
+            text-indent: -2.2em;
+            margin: 0 0 18px;
+        }
+
+        .codex-rule-num {
+            font-weight: 900;
+            color: #e4e4e7;
+            margin-right: 0.35em;
+        }
+
+        .codex-important {
+            margin-bottom: 20px;
+            padding: clamp(18px, 2.5vw, 24px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(0, 0, 0, 0.35);
+            box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.02);
+        }
+
+        .codex-important p {
+            margin: 0;
+            font-size: clamp(0.88rem, 1.5vw, 0.96rem);
+            font-style: italic;
+            font-weight: 600;
+            color: #e4e4e7;
+            line-height: 1.65;
+        }
+
+        .codex-important strong {
+            font-style: normal;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--red-bright);
+        }
+
+        .codex-sign {
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #71717a;
+            text-align: right;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        @media (max-width: 600px) {
+            .codex-title {
+                max-width: none;
+            }
+
+            .codex-intro {
+                padding-left: 12px;
+            }
+        }
+
         footer {
             border-top: 1px solid var(--line);
-            padding: 26px 0 36px;
+            padding: 36px 0 32px;
             text-align: center;
             color: #8892a0;
             font-size: 0.8rem;
         }
 
+        .footer-social {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            max-width: min(520px, 100%);
+            margin: 0 auto 24px;
+        }
+
+        .footer-social .social-loft-btn {
+            flex: 1 1 auto;
+        }
+
+        .footer-social .social-loft-btn--vk {
+            flex: 1 1 100%;
+        }
+
+        .footer-copy {
+            color: #6b7280;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 18px;
+        }
+
+        .footer-legal {
+            max-width: min(640px, 94%);
+            margin: 0 auto;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            font-size: clamp(0.62rem, 1.8vw, 0.7rem);
+            line-height: 1.55;
+            color: #71717a;
+            font-weight: 600;
+            text-align: center;
+        }
+
         @media (max-width: 880px) {
             .nav-links { display: none; }
             .hero-top { flex-direction: column; align-items: flex-start; }
+            .hero-order {
+                align-items: stretch;
+                width: 100%;
+            }
+            .hero-order .shop-order-btn { min-width: 0; width: 100%; }
+            .shop-order-inner {
+                grid-template-columns: 1fr;
+            }
+            .shop-order-actions {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .shop-order-btn { flex: 1 1 140px; }
+        }
+
+        @media (max-width: 520px) {
+            .shop-grid {
+                grid-template-columns: 1fr;
+                max-width: min(400px, 100%);
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .shop-media {
+                min-height: clamp(320px, 72vw, 440px);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .shop-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
         }
     </style>
 </head>
@@ -319,14 +847,60 @@
             <div>
                 <span class="section-tag">Kuznya Shop</span>
                 <h1>Магазин экипировки</h1>
-                <p>Бойцовская экипировка и street-drop в ДНК «Кузни». Выбирай комплект, оформляй заказ и выходи в зал в правильной форме.</p>
+                <p>Бойцовская экипировка и street-drop в ДНК «Кузни». Заказ — один контакт: Богдан в Telegram или звонок.</p>
             </div>
-            <a class="btn btn-red" href="https://t.me/kuznyashop_manager" target="_blank" rel="noopener noreferrer">Заказать у менеджера</a>
+            <div class="hero-order" data-order-zone>
+                <a class="shop-order-btn shop-order-btn--tg" data-order-tg href="#" target="_blank" rel="noopener noreferrer">
+                    Telegram
+                    <span class="shop-order-handle" data-order-handle></span>
+                </a>
+                <a class="shop-order-btn shop-order-btn--call" data-order-call data-order-call-short href="#">Позвонить</a>
+            </div>
         </div>
     </section>
 
     <main>
         <div class="container">
+            <section class="uniform-codex fade-up" id="uniform-rules" aria-labelledby="codex-heading">
+                <div class="codex-panel">
+                    <div class="codex-inner">
+                        <span class="codex-kicker">Официальный кодекс · Kuznya Shop</span>
+                        <h2 class="codex-title" id="codex-heading">
+                            <span>Правила ношения</span>
+                            <span>клубной формы</span>
+                            <em>Бойцовского клуба «Кузня»</em>
+                        </h2>
+                        <p class="codex-intro">
+                            Клубная форма обязательна для тренировок, соревнований и официальных мероприятий клуба. Форма должна быть чистой, аккуратной и в надлежащем состоянии. Запрещается менять внешний вид формы, закрывать или портить клубную символику. Боец обязан с достоинством представлять клуб «Кузня» в клубной форме — в зале и за его пределами.
+                        </p>
+
+                        <div class="codex-forbidden">
+                            <p class="codex-forbidden-title">В клубной форме запрещено</p>
+                            <ul class="codex-forbidden-list">
+                                <li>Употребление алкогольных напитков</li>
+                                <li>Курение сигарет, электронных сигарет, вейпов или других никотинсодержащих продуктов</li>
+                                <li>Нахождение в состоянии алкогольного или наркотического опьянения</li>
+                                <li>Участие в конфликтах, драках или действиях, порочащих репутацию клуба</li>
+                            </ul>
+                        </div>
+
+                        <p class="codex-rule">
+                            <span class="codex-rule-num">1.</span>
+                            Тренерский штаб оставляет за собой право не допустить спортсмена к тренировке при несоблюдении правил ношения формы. Повторные нарушения могут привести к дисциплинарным взысканиям, вплоть до исключения из клуба.
+                        </p>
+
+                        <div class="codex-important">
+                            <p>
+                                <strong>2. Важно!</strong>
+                                Клубная форма — не показуха и не средство демонстрации статуса. Форма символизирует дисциплину, трудолюбие и уважение к клубу, тренерам и товарищам по команде. Её необходимо носить с достоинством и с пониманием ответственности за репутацию Бойцовского клуба «Кузня».
+                            </p>
+                        </div>
+
+                        <p class="codex-sign"><span class="codex-rule-num">3.</span> Администрация Бойцовского клуба «Кузня»</p>
+                    </div>
+                </div>
+            </section>
+
             <div class="shop-toolbar fade-up" id="filter-toolbar">
                 <button class="filter-btn active" data-filter="ALL" type="button">Все</button>
                 <button class="filter-btn" data-filter="COMBAT" type="button">Combat</button>
@@ -336,30 +910,100 @@
 
             <div id="shop-grid" class="shop-grid"></div>
 
+            <section class="shop-order-hub fade-up" id="shop-order">
+                <div class="shop-order-inner">
+                    <div>
+                        <p class="shop-order-kicker">Кузня Шоп · заказ</p>
+                        <h2 class="shop-order-title">Майки и экипировка</h2>
+                        <p class="shop-order-name">Богдан · менеджер</p>
+                        <p class="shop-order-lead">Один контакт на заказ: напиши в Telegram или позвони. Уточним размер, цвет и срок.</p>
+                    </div>
+                    <div class="shop-order-actions" data-order-zone>
+                        <a class="shop-order-btn shop-order-btn--tg" data-order-tg href="#" target="_blank" rel="noopener noreferrer">
+                            Telegram
+                            <span class="shop-order-handle" data-order-handle></span>
+                        </a>
+                        <a class="shop-order-btn shop-order-btn--call" data-order-call href="#">Позвонить</a>
+                    </div>
+                </div>
+            </section>
+
             <div class="shop-links fade-up">
-                <p>Канал и менеджер: Telegram, VK, Instagram. Ответ в рабочее время 10:00-22:00.</p>
-                <div class="socials">
-                    <a class="btn btn-red" href="https://t.me/kuznyashop" target="_blank" rel="noopener noreferrer">Telegram</a>
-                    <a class="btn btn-red" href="https://vk.com/kuznyashop" target="_blank" rel="noopener noreferrer">VK</a>
-                    <a class="btn btn-red" href="https://instagram.com/kuznyashop" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <div>
+                    <p class="shop-links-label">Соцсети клуба</p>
+                    <p>Новости и контент сети. Заказы формы — только через Богдана выше.</p>
+                </div>
+                <div class="social-loft-bar">
+                    <a class="social-loft-btn social-loft-btn--vk" href="https://vk.ru/kuznyabk" target="_blank" rel="noopener noreferrer">ВКонтакте</a>
+                    <a class="social-loft-btn" href="https://t.me/kuznya_fight_club" target="_blank" rel="noopener noreferrer">Telegram</a>
+                    <a class="social-loft-btn" href="https://www.instagram.com/kuznyabk/" target="_blank" rel="noopener noreferrer">Фото и видео</a>
                 </div>
             </div>
         </div>
     </main>
 
     <footer>
-        © 2026 КУЗНЯ ШОП. Команда чемпионов с реальным боевым опытом.
+        <div class="container">
+            <div class="footer-social">
+                <a class="social-loft-btn social-loft-btn--vk" href="https://vk.ru/kuznyabk" target="_blank" rel="noopener noreferrer">ВКонтакте</a>
+                <a class="social-loft-btn" href="https://t.me/kuznya_fight_club" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a class="social-loft-btn" href="https://www.instagram.com/kuznyabk/" target="_blank" rel="noopener noreferrer">Фото и видео</a>
+            </div>
+            <p class="footer-copy">© 2026 КУЗНЯ ШОП. Команда чемпионов с реальным боевым опытом.</p>
+            <p class="footer-legal">
+                Деятельность организации Meta Platforms Inc. и ее продуктов Instagram и Facebook признана экстремистской и запрещена на территории РФ.
+            </p>
+        </div>
     </footer>
 
     <script>
         const FORGE_HERO_VIDEO = "https://assets.mixkit.co/videos/preview/mixkit-blacksmith-hitting-a-piece-of-metal-with-a-hammer-22749-large.mp4";
 
-        const SOCIAL_LINKS = {
-            telegram: "https://t.me/kuznyashop",
-            instagram: "https://instagram.com/kuznyashop",
-            vk: "https://vk.com/kuznyashop",
-            manager: "https://t.me/kuznyashop_manager"
+        const ORDER_CONTACT = {
+            name: "Богдан",
+            handle: "@Bogdannn_88",
+            telegram: "https://t.me/Bogdannn_88",
+            phone: "+79180620909",
+            phoneDisplay: "+7 918 062-09-09"
         };
+
+        function initOrderContact() {
+            document.querySelectorAll("[data-order-zone]").forEach(function (zone) {
+                zone.querySelectorAll("[data-order-tg]").forEach(function (link) {
+                    link.href = ORDER_CONTACT.telegram;
+                });
+                zone.querySelectorAll("[data-order-handle]").forEach(function (el) {
+                    el.textContent = ORDER_CONTACT.handle;
+                });
+                zone.querySelectorAll("[data-order-call]").forEach(function (link) {
+                    if (!ORDER_CONTACT.phone) {
+                        link.hidden = true;
+                        return;
+                    }
+                    link.href = "tel:" + ORDER_CONTACT.phone.replace(/\s/g, "");
+                    link.textContent = link.hasAttribute("data-order-call-short")
+                        ? "Позвонить"
+                        : "Позвонить · " + (ORDER_CONTACT.phoneDisplay || ORDER_CONTACT.phone);
+                });
+            });
+        }
+
+        const SOCIAL_LINKS = {
+            vk: "https://vk.ru/kuznyabk",
+            telegram: "https://t.me/kuznya_fight_club",
+            photo: "https://www.instagram.com/kuznyabk/"
+        };
+
+        function orderTelegramUrl(productName) {
+            var text = productName
+                ? "Здравствуйте! Хочу заказать: " + productName
+                : "Здравствуйте! Хочу заказать экипировку Кузня Шоп";
+            return (
+                ORDER_CONTACT.telegram +
+                "?text=" +
+                encodeURIComponent(text)
+            );
+        }
 
         const COLLECTION_TYPE = {
             COMBAT: "COMBAT",
@@ -410,7 +1054,7 @@
                             <span class="shop-price">${formatPrice.format(product.price)} ₽</span>
                             <span class="shop-cat">${product.category}</span>
                         </div>
-                        <a class="btn btn-red" href="${SOCIAL_LINKS.manager}" target="_blank" rel="noopener noreferrer">Купить</a>
+                        <a class="btn btn-red" href="${orderTelegramUrl(product.name)}" target="_blank" rel="noopener noreferrer">Заказать</a>
                     </div>
                 </article>
             `;
@@ -460,6 +1104,7 @@
             items.forEach((item) => observer.observe(item));
         }
 
+        initOrderContact();
         renderProducts("ALL");
     </script>
 </body>

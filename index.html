@@ -2278,15 +2278,103 @@
             background: rgba(255,255,255,0.02);
         }
 
+        /* --- Соцсети (Cyber-Loft, РФ) --- */
+        .social-loft-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: stretch;
+        }
+
+        .social-loft-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-main);
+            font-weight: 900;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #f4f4f5;
+            background: #0a0a0c;
+            border: 1px solid #3a424f;
+            padding: 14px 20px;
+            min-width: min(100%, 148px);
+            flex: 1 1 auto;
+            transition:
+                border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                color 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .social-loft-btn:hover,
+        .social-loft-btn:focus-visible {
+            border-color: rgba(214, 0, 0, 0.8);
+            box-shadow:
+                0 0 0 1px rgba(214, 0, 0, 0.35),
+                0 0 28px rgba(214, 0, 0, 0.32);
+            color: #fff;
+            outline: none;
+        }
+
+        .social-loft-btn--vk {
+            flex: 1 1 100%;
+            border-color: rgba(255, 255, 255, 0.32);
+            background: linear-gradient(180deg, #161a22 0%, #0a0c10 100%);
+            padding: 16px 24px;
+            font-size: 0.82rem;
+            letter-spacing: 0.16em;
+        }
+
+        .social-loft-btn--vk:hover,
+        .social-loft-btn--vk:focus-visible {
+            border-color: rgba(255, 255, 255, 0.55);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                0 0 32px rgba(214, 0, 0, 0.28);
+        }
+
+        .contacts-social {
+            margin-top: 28px;
+        }
+
+        .contacts-social-label {
+            font-size: 0.68rem;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #a1a1aa;
+            margin-bottom: 14px;
+        }
+
         /* --- Footer --- */
         footer {
-            padding: 60px 0;
+            padding: 60px 0 40px;
             text-align: center;
             background: #000;
         }
 
         .footer-logo {
-            margin-bottom: 30px;
+            margin-bottom: 24px;
+        }
+
+        .footer-social {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            max-width: min(520px, 100%);
+            margin: 0 auto 28px;
+        }
+
+        .footer-social .social-loft-btn {
+            flex: 1 1 auto;
+        }
+
+        .footer-social .social-loft-btn--vk {
+            flex: 1 1 100%;
         }
 
         .footer-copy {
@@ -2295,6 +2383,20 @@
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .footer-legal {
+            max-width: min(640px, 94%);
+            margin: 0 auto;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            font-size: clamp(0.62rem, 1.8vw, 0.7rem);
+            line-height: 1.55;
+            color: #71717a;
+            font-weight: 600;
+            text-align: center;
         }
 
         /* --- Animations --- */
@@ -2794,7 +2896,15 @@
                         <h2 class="reveal">Контакты</h2>
                         <p class="reveal" style="margin-bottom: 20px;"><strong>Адрес:</strong> г. Анапа, ул. Шевченко 24</p>
                         <p class="reveal" style="margin-bottom: 20px;"><strong>Телефон:</strong> <a href="tel:+79284175515" style="color: var(--red); text-decoration: none; font-weight: 900; font-size: 1.5rem;">+7 928 417-55-15</a></p>
-                        <p class="reveal"><strong>Режим:</strong> Пн-Сб: 10:00 - 22:00</p>
+                        <p class="reveal" style="margin-bottom: 24px;"><strong>Режим:</strong> Пн-Сб: 10:00 - 22:00</p>
+                        <div class="contacts-social reveal">
+                            <p class="contacts-social-label">Соцсети клуба</p>
+                            <div class="social-loft-bar">
+                                <a class="social-loft-btn social-loft-btn--vk" href="https://vk.ru/kuznyabk" target="_blank" rel="noopener noreferrer">ВКонтакте</a>
+                                <a class="social-loft-btn" href="https://t.me/kuznya_fight_club" target="_blank" rel="noopener noreferrer">Telegram</a>
+                                <a class="social-loft-btn" href="https://www.instagram.com/kuznyabk/" target="_blank" rel="noopener noreferrer">Фото и видео</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card reveal" style="display: flex; align-items: center; justify-content: center; background: #000;">
                         <div style="text-align: center;">
@@ -2824,7 +2934,15 @@
             <div class="footer-logo">
                 <span style="font-weight: 900; font-size: 1.5rem;">КУЗНЯ <span style="color: var(--red);">АНАПА</span></span>
             </div>
+            <div class="footer-social">
+                <a class="social-loft-btn social-loft-btn--vk" href="https://vk.ru/kuznyabk" target="_blank" rel="noopener noreferrer">ВКонтакте</a>
+                <a class="social-loft-btn" href="https://t.me/kuznya_fight_club" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a class="social-loft-btn" href="https://www.instagram.com/kuznyabk/" target="_blank" rel="noopener noreferrer">Фото и видео</a>
+            </div>
             <p class="footer-copy">© 2024 БОЙЦОВСКИЙ КЛУБ КУЗНЯ. ЗАКАЛЯЙ ХАРАКТЕР.</p>
+            <p class="footer-legal">
+                Деятельность организации Meta Platforms Inc. и ее продуктов Instagram и Facebook признана экстремистской и запрещена на территории РФ.
+            </p>
         </div>
     </footer>
 
